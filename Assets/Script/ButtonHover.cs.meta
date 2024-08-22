@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f50044d635020424ba2eb2e43f8e5aed
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - resume: {instanceID: 0}
+  - backToMenu: {instanceID: 0}
+  - resumeHoverSprite: {fileID: 21300000, guid: d0d0bbf98323c7149b0b671acfc61df3, type: 3}
+  - backToMenuHoverSprite: {fileID: 21300000, guid: c7e63e9b91fd0364cb85875c4a689bfc, type: 3}
+  - originalResumeSprite: {fileID: 21300000, guid: 13954bedabbfd1a44a437f81764ec691, type: 3}
+  - originalBackToMenuSprite: {fileID: 21300000, guid: 994f5f545d07b0e488942410760c3d1c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

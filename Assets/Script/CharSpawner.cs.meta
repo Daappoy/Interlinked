@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e50edabe9879a16498c2495b5c49141c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - charaSpawnLoc: {instanceID: 0}
+  - charaPrefab: {fileID: 4614139415751108348, guid: b91d44136b667624ca1dfdea2b2d1bf3, type: 3}
+  - Character: {fileID: -2430388345938748301, guid: b91d44136b667624ca1dfdea2b2d1bf3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
