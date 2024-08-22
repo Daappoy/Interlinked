@@ -8,51 +8,56 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public GameObject[] XaraRelatedObjects;
+    public GameObject[] LucasRelatedObjects;
     //Interviewee
-    public Character currentChar;
-    public CharDialogue charDialogueScript;
-    //public GameObject MainMenuPanel;
-
-
+        public Character currentChar;
+        public CharDialogue charDialogueScript;
     //Pause menu
-    public GameObject MainMenuBackground;
-    private bool isPaused = false;
-    private bool escapeKeyPressed = false;
+        public GameObject MainMenuBackground;
+        private bool isPaused = false;
+        private bool escapeKeyPressed = false;
     
     // Question Buttons
-    public GameObject questionsPanel;
-    public GameObject button0;
-    public GameObject button1;
-    public GameObject button2;
-    public GameObject button3;
-    public GameObject button4;
-    public GameObject button5;
-    public GameObject button6;
-    public GameObject button7;
-    public GameObject button8;
-    public GameObject button9;
-    public TextMeshProUGUI button0Text;
-    public TextMeshProUGUI button1Text;
-    public TextMeshProUGUI button2Text;
-    public TextMeshProUGUI button3Text;
-    public TextMeshProUGUI button4Text;
-    public TextMeshProUGUI button5Text;
-    public TextMeshProUGUI button6Text;
-    public TextMeshProUGUI button7Text;
-    public TextMeshProUGUI button8Text;
-    public TextMeshProUGUI button9Text;
+        public GameObject questionsPanel;
+        public GameObject button0;
+        public GameObject button1;
+        public GameObject button2;
+        public GameObject button3;
+        public GameObject button4;
+        public GameObject button5;
+        public GameObject button6;
+        public GameObject button7;
+        public GameObject button8;
+        public GameObject button9;
+        public TextMeshProUGUI button0Text;
+        public TextMeshProUGUI button1Text;
+        public TextMeshProUGUI button2Text;
+        public TextMeshProUGUI button3Text;
+        public TextMeshProUGUI button4Text;
+        public TextMeshProUGUI button5Text;
+        public TextMeshProUGUI button6Text;
+        public TextMeshProUGUI button7Text;
+        public TextMeshProUGUI button8Text;
+        public TextMeshProUGUI button9Text;
 
     //Subtitles
-    public GameObject panel;
-    public TMP_Text panelText;
-    private string stringToDisplay;
-    public int currentQuestionIndex = -1;
-    public int charSpecificQuestionNum = -1;
-    private int panelLetterCount;
-    private bool isTypingLetterByLetter = false;
-    private bool isTalking = false; //player
-    public bool characterHasToRespond = false;
-    public bool panelIsActive;
+        public GameObject panel;
+        public TMP_Text panelText;
+        private string stringToDisplay;
+        public int currentQuestionIndex = -1;
+        public int charSpecificQuestionNum = -1;
+        private int panelLetterCount;
+        private bool isTypingLetterByLetter = false;
+        private bool isTalking = false; //player
+        public bool characterHasToRespond = false;
+        public bool panelIsActive;
+
+    //public GameObject MainMenuPanel;
+    
+    
+    public bool isXara = false; //if we're playing as the human right now
+    public bool isLucas = false;
 
     public enum Types{
         AI,
@@ -114,7 +119,7 @@ public class Player : MonoBehaviour
         button9.SetActive(false);
     }
 
-    public void enableAllQuestionButtons(){
+    public void enablePlayerQuestions(){
         questionsPanel.SetActive(true);
         if( (Types) currentChar.type == Types.AI){
             button0.SetActive(true);
@@ -150,25 +155,23 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
-
     public void question1Picked(){
         if(!currentChar.canMove){
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
-
     public void question2Picked(){
         if(!currentChar.canMove){
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question3Picked(){
@@ -176,7 +179,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question4Picked(){
@@ -184,7 +187,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question5Picked(){
@@ -192,7 +195,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 5;    
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question6Picked(){
@@ -200,7 +203,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 6;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question7Picked(){
@@ -208,7 +211,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 7;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question8Picked(){
@@ -216,14 +219,14 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 8;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
     public void question9Picked(){
         if(!currentChar.canMove){
             currentQuestionIndex = 9;
             DisplayWhatWasSaid();
-            enableAllQuestionButtons();
+            enablePlayerQuestions();
         }
     }
 
@@ -235,6 +238,7 @@ public class Player : MonoBehaviour
         panelIsActive = true;
         DisplayString();
     }
+
 
     public void DisplayString(){
         characterHasToRespond = true;
@@ -298,17 +302,46 @@ public class Player : MonoBehaviour
         }
     }
     
+    public void SwitchActivePlayableCharacter(){
+        if(isLucas){
+            isLucas = false;
+            isXara = true;
+        } else if(isXara){
+            isLucas = true;
+            isXara = false;
+        } else{
+            Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
+        }
+    }
+
     // Start is called before the first frame update
     void Start(){
         Time.timeScale = 1f;
         isPaused = false;
         disableAllQuestionButtons();
+        isXara = true;
+        LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
+        XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
         // question0Picked();
     }
 
     // Update is called once per frame
     void Update()
     {   
+        if(isXara){
+            // Debug.Log("Xara is active");
+            isLucas = false;
+            DisableLucasRelatedObjects();
+            EnableXaraRelatedObjects();
+        } else if(isLucas){
+            // Debug.Log("Lucas is active");
+            isXara = false;
+            DisableXaraRelatedObjects();
+            EnableLucasRelatedObjects();
+        } else{
+            Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
+        }
+
         if(isTypingLetterByLetter){ 
             isTalking = true;
         }
@@ -370,9 +403,33 @@ public class Player : MonoBehaviour
         }
     }
     
+    public void EnableLucasRelatedObjects(){
+        foreach(GameObject obj in LucasRelatedObjects){
+            obj.SetActive(true);
+        }
+    }
+
+    public void EnableXaraRelatedObjects(){
+        foreach(GameObject obj in XaraRelatedObjects){
+            obj.SetActive(true);
+        }
+    }
+
+    public void DisableLucasRelatedObjects(){
+        foreach(GameObject obj in LucasRelatedObjects){
+            obj.SetActive(false);
+        }
+    }
+
+    public void DisableXaraRelatedObjects(){
+        foreach(GameObject obj in XaraRelatedObjects){
+            obj.SetActive(false);
+        }
+    }
+
     public void FixedUpdate(){
-        if(currentChar.GetComponent<Character>().canMove == false){
-            enableAllQuestionButtons();
+        if(currentChar.GetComponent<Character>().canMove == false && isXara){
+            enablePlayerQuestions();
         } else{
             disableAllQuestionButtons();
         }
