@@ -1277,9 +1277,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCharacter: {fileID: 0}
+  playerGameObject: {fileID: 0}
   player: {fileID: 0}
   panel: {fileID: 396570288}
   panelText: {fileID: 912660555}
+  isTalking: 0
 --- !u!114 &396570291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2863,9 +2865,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCharacter: {fileID: 0}
+  playerGameObject: {fileID: 2134892391}
   player: {fileID: 2134892393}
   panel: {fileID: 396570288}
   panelText: {fileID: 912660555}
+  isTalking: 0
 --- !u!1 &1185410354
 GameObject:
   m_ObjectHideFlags: 0
@@ -5825,7 +5829,7 @@ MonoBehaviour:
   currentQuestionIndex: -1
   charSpecificQuestionNum: -1
   characterHasToRespond: 0
-  panelIsActive: 0
+  hasToSwitch: 0
   isXara: 1
   isLucas: 0
 --- !u!1660057539 &9223372036854775807

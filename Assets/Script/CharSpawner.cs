@@ -65,6 +65,7 @@ public class CharSpawner : MonoBehaviour
             isSentient = false;
         }
         isSentient = true;
+        currentChara.player = player;
         currentChara.stance = num; //Randomly determines the character's stance (Hostile, Neutral, or Compassionate)
         // Debug.Log("Setting current character from the player's pov to the one that just spawned");
         player.currentChar = currentChara; //Sets the current character to the spawned character

@@ -7,16 +7,16 @@ using UnityEngine.UI;
 public class CharDialogue : MonoBehaviour
 {   
     public Character currentCharacter;
+    public GameObject playerGameObject;
     public Player player;
     public GameObject panel;
     public TMP_Text panelText;
     private string stringToDisplay; 
     private int stringToDisplayIndex;
     private bool isTypingLetterByLetter = false;
-    private bool isTalking = false;
+    public bool isTalking = false;
     private Coroutine typingCoroutine;
-    // private int panelLetterCount;
-    
+
     public enum Types{
         AI,
         Human,
@@ -246,11 +246,14 @@ public class CharDialogue : MonoBehaviour
     };
 
     public void DetermineDialogue(){
+        playerGameObject.SetActive(false);
         if(panel.activeSelf == false){
             panel.SetActive(true);
         }
-        isTalking = true;
-        Debug.Log(player.currentQuestionIndex);
+        if(!isTalking){
+            isTalking = true;
+        }
+        Debug.Log("Player Question index: " + player.currentQuestionIndex);
         if((Types) currentCharacter.type == Types.AI){ //kl AI
             if( (AINames) currentCharacter.characterName == AINames.Dorothy ){
                 //Dorothy
@@ -295,11 +298,10 @@ public class CharDialogue : MonoBehaviour
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
-                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
                 // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Lily ){
                 //Lily
-                
                 switch (player.currentQuestionIndex){
                     case 0:
                         stringToDisplayIndex = Random.Range(0, 2);
@@ -341,7 +343,7 @@ public class CharDialogue : MonoBehaviour
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
-                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
                 // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Garry ){
                 //Garry
@@ -617,37 +619,45 @@ public class CharDialogue : MonoBehaviour
                 // stringToDisplayIndex = -1;
             }
         }
-        player.characterHasToRespond = false;
+        // player.characterHasToRespond = false;
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
-        //set the bool to true
-        // panelText.text = "";
+        panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
-            // panelLetterCount++;
             yield return new WaitForSeconds(0.05f);
         }
+        isTypingLetterByLetter = false;
+        player.characterHasToRespond = false;
     }
 
     void Update(){
+        // if(doneResponding){
+        //     player.characterHasToRespond = false;
+        // }
+
         if(isTypingLetterByLetter){
             isTalking = true;
         }
-
+        
         if(Input.GetMouseButtonDown(0)){ //if the player clicks
-            if(isTypingLetterByLetter && isTalking){ //if the dialogue is still typing
+            if(isTypingLetterByLetter){ //if the dialogue is still typing
+                Debug.Log("Showing full line...");
+
                 StopCoroutine(typingCoroutine);
                 isTypingLetterByLetter = false; 
-                Debug.Log("Showing full line...");
-                panel.SetActive(true);
+                if(panel.activeSelf == false){
+                    panel.SetActive(true);
+                }
+                
                 panelText.text = "";
                 panelText.text = stringToDisplay;
                 Debug.Log("String to display is: " + stringToDisplay);
                 isTalking = false;
-            } else if(!isTalking){ //if the dialogue is done typing
-                panelText.text = ""; //clear the text
-                panel.SetActive(false); //set the panel to inactive
+                player.characterHasToRespond = false;
+                playerGameObject.SetActive(true);
+                // hasDisplayedFullLine = true;
             }
         }
     }

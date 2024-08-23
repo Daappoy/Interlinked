@@ -37,10 +37,12 @@ public class Character : MonoBehaviour
     
     private Rigidbody2D rb2d;
 
+    public CharSpawner charSpawner;
     public bool canMove = false;
     private bool courutineRan = false;
     public float speed = 0.5f;
-
+    public bool inInteview;
+    
     void Start(){
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -53,28 +55,34 @@ public class Character : MonoBehaviour
         }
 
         if(transform.position.x >= -1.4 && transform.position.x <= -1.3){
-            if(!courutineRan){
-                canMove = false;
-                StartCoroutine(WaitAndMove(5));
-                
+            canMove = false;
+            if (player != null)
+            {
+                Debug.Log("Player reference is valid. Calling enablePlayerQuestions.");
+                player.enablePlayerQuestions();
+                inInteview = true;
             }
         }
         
         if(transform.position.x > 14){
             Destroy(gameObject);
+            charSpawner.SpawnACharacter();
             // Debug.Log("Destroyed");
         }
     }
+    
+    
 
-    IEnumerator WaitAndMove(int timeToWait)
-    {
-        courutineRan = true;
-        if(courutineRan){
-            // Debug.Log("At chair");
-        }
-        yield return new WaitForSeconds(60);
-        canMove = true;
-    }
+
+    // IEnumerator WaitAndMove(int timeToWait)
+    // {
+    //     courutineRan = true;
+    //     if(courutineRan){
+    //         // Debug.Log("At chair");
+    //     }
+    //     yield return new WaitForSeconds(60);
+    //     canMove = true;
+    // }
 
     void MoveRight(){
         Vector3 newPosition = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
