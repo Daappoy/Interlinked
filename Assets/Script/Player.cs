@@ -45,14 +45,14 @@ public class Player : MonoBehaviour
         public GameObject panel;
         public TMP_Text panelText;
         private string stringToDisplay;
-        public int currentQuestionIndex = -1;
-        public int charSpecificQuestionNum = -1;
-        private int panelLetterCount;
+        public int currentQuestionIndex = 0;
+        public int charSpecificQuestionNum = 0;
+        // private int panelLetterCount;
         private bool isTypingLetterByLetter = false;
         private bool isTalking = false; //player
         public bool characterHasToRespond = false;
         public bool panelIsActive;
-
+        private Coroutine typingCoroutine;
     //public GameObject MainMenuPanel;
     
     
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question1Picked(){
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question2Picked(){
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question3Picked(){
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question4Picked(){
@@ -187,7 +187,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question5Picked(){
@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 5;    
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question6Picked(){
@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 6;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question7Picked(){
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 7;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question8Picked(){
@@ -219,14 +219,14 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 8;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
     public void question9Picked(){
         if(!currentChar.canMove){
             currentQuestionIndex = 9;
             DisplayWhatWasSaid();
-            enablePlayerQuestions();
+            // enablePlayerQuestions();
         }
     }
 
@@ -246,26 +246,31 @@ public class Player : MonoBehaviour
             charSpecificQuestionNum = checkCharacter();
             // Debug.Log("The character specific question index is: " + charSpecificQuestionNum);
             stringToDisplay = characterSpecificQuestions[charSpecificQuestionNum];
-            charSpecificQuestionNum = -1;
+            // charSpecificQuestionNum = -1;
         } else{ //we use the base array filled with the player dialogues
             // Debug.Log("The question index is: " + currentQuestionIndex);
             stringToDisplay = playerOptions[currentQuestionIndex];
-            currentQuestionIndex = -1;
+            // currentQuestionIndex = -1;
         }
         isTypingLetterByLetter = true;
-        StartCoroutine(TypeLetterByLetter(stringToDisplay)); //we start having it type out the dialogue letter by letter
+        panelText.text = "";
+        typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay)); //we start having it type out the dialogue letter by letter
         // panelLetterCount = 0;
     }
     
     public int checkCharacter(){
         if( (Types) currentChar.type == Types.AI){
             if( (AINames) currentChar.characterName == AINames.Dorothy ){
+                //Dorothy
+                // Debug.Log("Current Character is Dorothy");
                 return 0;
             } else if( (AINames) currentChar.characterName == AINames.Lily ){
                 //Lily
+                // Debug.Log("Current Character is Lily");
                 return 1;
             } else if( (AINames) currentChar.characterName == AINames.Garry ){
                 //Garry
+                // Debug.Log("Current Character is Garry");
                 return 2;
             } else{
                 Debug.Log("Character not found");
@@ -273,14 +278,24 @@ public class Player : MonoBehaviour
             }
         } else if((Types) currentChar.type == Types.Human){
             if( (HumanNames) currentChar.characterName == HumanNames.Caleb){
+                //Caleb
+                // Debug.Log("Current Character is Caleb");
                 return 3;
             } else if((HumanNames) currentChar.characterName == HumanNames.Isaac){
+                //Isaac
+                // Debug.Log("Current Character is Isaac");
                 return 4;
             } else if((HumanNames) currentChar.characterName == HumanNames.Kim){
+                //Kim
+                // Debug.Log("Current Character is Kim");
                 return 5;
             } else if((HumanNames) currentChar.characterName == HumanNames.Timmy){
+                //Timmy
+                // Debug.Log("Current Character is Timmy");
                 return 6;
             } else if((HumanNames) currentChar.characterName == HumanNames.Kate){
+                //Kate
+                // Debug.Log("Current Character is Kate");
                 return 7;
             } else{
                 Debug.Log("Character not found");
@@ -294,10 +309,10 @@ public class Player : MonoBehaviour
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
         //set the bool to true
-        panelText.text = "";
+        // panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
-            panelLetterCount++;
+            // panelLetterCount++;
             yield return new WaitForSeconds(0.05f);
         }
     }
@@ -350,11 +365,11 @@ public class Player : MonoBehaviour
         if( panelIsActive && Input.GetMouseButtonDown(0)){ //if the player clicks
             // Debug.Log("Mouse Clicked");
             if(isTypingLetterByLetter == true){ 
+                StopCoroutine(typingCoroutine);
                 isTypingLetterByLetter = false; 
-                // Debug.Log("Showing full line...");
-                StopCoroutine(TypeLetterByLetter(stringToDisplay));
+                Debug.Log("Showing full line...");
                 panel.SetActive(true);
-                panel.SetActive(false);
+                Debug.Log("String to display is: " + stringToDisplay);
                 panelText.text = stringToDisplay;
                 isTalking = false; 
             } else if(isTalking == false && characterHasToRespond == false){ //if the dialogue is done typing
@@ -454,6 +469,7 @@ public class Player : MonoBehaviour
     private void characterResponds(){
         charDialogueScript.currentCharacter = currentChar;
         // Debug.Log("Char Dialogue Script current char is set");
+        panelText.text = "";
         charDialogueScript.DetermineDialogue();
     }
 

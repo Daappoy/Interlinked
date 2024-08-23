@@ -52,7 +52,7 @@ public class Character : MonoBehaviour
             MoveRight();
         }
 
-        if(transform.position.x >= -1.5 && transform.position.x <= 1.6){
+        if(transform.position.x >= -1.4 && transform.position.x <= -1.3){
             if(!courutineRan){
                 canMove = false;
                 StartCoroutine(WaitAndMove(5));

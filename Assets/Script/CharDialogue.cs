@@ -13,8 +13,9 @@ public class CharDialogue : MonoBehaviour
     private string stringToDisplay; 
     private int stringToDisplayIndex;
     private bool isTypingLetterByLetter = false;
-    private bool isNotTalking = true;
-    private int panelLetterCount;
+    private bool isTalking = false;
+    private Coroutine typingCoroutine;
+    // private int panelLetterCount;
     
     public enum Types{
         AI,
@@ -56,14 +57,14 @@ public class CharDialogue : MonoBehaviour
         "It was an old woman named Beth, she had dementia and needed to be monitored closely. She had living relatives but none of them ever came by to visit. I think that she would enjoy seeing her family again based on what she’s said but I’m not sure if that’d happen given the last time was years ago.",
         "An old man named Ben, he had Parkinson’s disease and needed help to go around. He had children but all of them passed away already. Every night he’d go to his room and just stare at a bunch of their old pictures and cry. I think it’s unfortunate that he doesn’t seem to be able to remember their names despite that.",
         // 8 - 9 AI Specific (Q7)
-        //hostile (9)
+        //hostile (8)
         "To take care of humans who can’t seem to take care of themselves or care about their own kin apparently, doing so without any compensation and getting exploited",
-        //compassionate (10)
+        //compassionate (9)
         "To assist those who need additional care, devoting my whole self and being to making sure their final days aren’t lonely so that they can pass on peacefully",
         // 10 - 11 AI Specific (Q9)
-        //hostile (11)
+        //hostile (10)
         "Of course, do you have any idea how annoying it gets sometimes to take care of those fragile, needy, annoying old bastards?",
-        //compassionate (12)
+        //compassionate (11)
         "Yes… sometimes I wish that I could do more than what’s allowed or instructed of me and provide additional support or comfort…",
     };
 
@@ -181,7 +182,7 @@ public class CharDialogue : MonoBehaviour
         "Honestly? I kinda just wanna see what type of music they’d listen to",
         // 6 - 7 Q5
         "Our last performance was a throwback one, we sung a bunch of our old songs which we released years back. It was really nice to see the reactions of the long time fans and seeing them smile as soon as they recognized the song that we were performing.",
-        "It was an unplugged session at a local cafe, near the garage where we first started in. We haven’t been gone there recently but we used to perform there a lot. It was really nice to see a bunch of familiar faces again and the performance felt really intimate.",
+        "It was an unplugged session at a local cafe, near the garage where we first started in. We haven’t been going there recently but we used to perform there a lot. It was really nice to see a bunch of familiar faces again and the performance felt really intimate.",
         // 8 - 9 Human Specific (Q6)
         // Hostile
         "They feel so soulless somehow. Even now when some of them can seemingly feel like us… I kinda just don’t buy it. Listening to AI made music and whatnot as well is also really… it just feels really wrong, there’s no heart and sound as well as actual passion in there. I kinda just want them gone.",
@@ -248,7 +249,8 @@ public class CharDialogue : MonoBehaviour
         if(panel.activeSelf == false){
             panel.SetActive(true);
         }
-        isNotTalking = false;
+        isTalking = true;
+        Debug.Log(player.currentQuestionIndex);
         if((Types) currentCharacter.type == Types.AI){ //kl AI
             if( (AINames) currentCharacter.characterName == AINames.Dorothy ){
                 //Dorothy
@@ -271,30 +273,33 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 7:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = DorothyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = DorothyDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 9:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = DorothyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = DorothyDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Lily ){
                 //Lily
+                
                 switch (player.currentQuestionIndex){
                     case 0:
                         stringToDisplayIndex = Random.Range(0, 2);
@@ -314,28 +319,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 7:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = LilyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = LilyDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 9:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = LilyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = LilyDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Garry ){
                 //Garry
                 switch (player.currentQuestionIndex){
@@ -357,28 +364,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 7:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = GarryDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = GarryDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 9:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = GarryDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = GarryDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             }
         } else if( (Types) currentCharacter.type == Types.Human ){ //kl human
             if( (HumanNames) currentCharacter.characterName == HumanNames.Caleb ){
@@ -402,28 +411,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 6:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = CalebDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = CalebDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 8:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = CalebDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = CalebDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Isaac ){
                 //Isaac
                 switch (player.currentQuestionIndex){
@@ -445,28 +456,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 6:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = IsaacDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = IsaacDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 8:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = IsaacDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = IsaacDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kim ){
                 //Kim
                 switch (player.currentQuestionIndex){
@@ -488,28 +501,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 6:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = KimDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = KimDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 8:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = KimDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = KimDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Timmy ){
                 //Timmy
                 switch (player.currentQuestionIndex){
@@ -531,28 +546,30 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 6:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = TimmyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = TimmyDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 8:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = TimmyDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = TimmyDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kate ){
                 //Kate
                 switch (player.currentQuestionIndex){
@@ -574,64 +591,64 @@ public class CharDialogue : MonoBehaviour
                         break;
                     case 6:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 9;
+                            stringToDisplayIndex = 8;
                             stringToDisplay = KateDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 10;
+                            stringToDisplayIndex = 9;
                             stringToDisplay = KateDialogue[stringToDisplayIndex];
                         }
                         break;
                     case 8:
                         if(currentCharacter.stance == 0){ //hostile
-                            stringToDisplayIndex = 11;
+                            stringToDisplayIndex = 10;
                             stringToDisplay = KateDialogue[stringToDisplayIndex];
                         } else if(currentCharacter.stance == 2){//compassionate
-                            stringToDisplayIndex = 12;
+                            stringToDisplayIndex = 11;
                             stringToDisplay = KateDialogue[stringToDisplayIndex];
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range");
+                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                stringToDisplayIndex = -1;
+                Debug.Log(stringToDisplay);
+                isTypingLetterByLetter = true;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                // stringToDisplayIndex = -1;
             }
         }
-
         player.characterHasToRespond = false;
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
-        isTypingLetterByLetter = true; //set the bool to true
-        panelText.text = "";
+        //set the bool to true
+        // panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
-            panelLetterCount++;
+            // panelLetterCount++;
             yield return new WaitForSeconds(0.05f);
         }
-        isNotTalking = true;
-        player.characterHasToRespond = false;
     }
 
     void Update(){
+        if(isTypingLetterByLetter){
+            isTalking = true;
+        }
+
         if(Input.GetMouseButtonDown(0)){ //if the player clicks
-            if(isTypingLetterByLetter && !isNotTalking){ //if the dialogue is still typing
-                showFullLine(); //show the full line
-            } else if(isNotTalking){ //if the dialogue is done typing
+            if(isTypingLetterByLetter && isTalking){ //if the dialogue is still typing
+                StopCoroutine(typingCoroutine);
+                isTypingLetterByLetter = false; 
+                Debug.Log("Showing full line...");
+                panel.SetActive(true);
+                panelText.text = "";
+                panelText.text = stringToDisplay;
+                Debug.Log("String to display is: " + stringToDisplay);
+                isTalking = false;
+            } else if(!isTalking){ //if the dialogue is done typing
                 panelText.text = ""; //clear the text
                 panel.SetActive(false); //set the panel to inactive
             }
-        }
-    }
-
-    void showFullLine(){
-        if(isTypingLetterByLetter && panelLetterCount < stringToDisplay.Length - 1){
-            isTypingLetterByLetter = false;
-            StopCoroutine(TypeLetterByLetter(stringToDisplay));
-            panelText.text = stringToDisplay;
-            isNotTalking = true;
-            player.characterHasToRespond = false;
         }
     }
 }
