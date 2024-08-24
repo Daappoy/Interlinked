@@ -5,8 +5,7 @@ using System.Linq;
 
 public class Player : MonoBehaviour
 {
-    public GameObject[] XaraRelatedObjects;
-    public GameObject[] LucasRelatedObjects;
+    
     //Interviewee
         public Character currentChar;
         public CharDialogue charDialogueScript;
@@ -35,13 +34,21 @@ public class Player : MonoBehaviour
         private Coroutine typingCoroutine;
         public bool hasToSwitch = false;
     
+    //Playable Character Related 
+        public bool isXara = false; //if we're playing as the human right now
+        public bool isLucas = false;
+        public GameObject[] XaraRelatedObjects;
+        public GameObject[] LucasRelatedObjects;
     
-    public bool isXara = false; //if we're playing as the human right now
-    public bool isLucas = false;
-    // public bool isDoneWithCharacter = true;
     public enum Types{
         AI,
         Human,
+    }
+
+    public enum Stance{
+        Hostile,
+        Neutral,
+        Compassionate,
     }
 
     public enum AINames{
@@ -94,35 +101,35 @@ public class Player : MonoBehaviour
 
     public void enablePlayerQuestions(){
         questionsPanel.SetActive(true);
-        if ((Types)currentChar.type == Types.AI)
-        {
-            foreach (int index in aiButtonIndexes)
-            {
-                if (index < buttons.Length)
-                {
+        if((Types)currentChar.type == Types.AI){
+            foreach (int index in aiButtonIndexes){
+                if (index < buttons.Length){
                     buttons[index].SetActive(true);
-                    buttonTexts[index].text = index == 5 ? characterSpecificQuestions[checkCharacter()] : playerOptions[index];
+                    if (index == 5){
+                        buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
+                    }else{
+                        buttonTexts[index].text = playerOptions[index];
+                    }
                 }
-                else
-                {
+                else{
                     Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
                 }
             }
-        }
-        else if ((Types)currentChar.type == Types.Human)
-        {
-            foreach (int index in humanButtonIndexes)
-            {
-                if (index < buttons.Length)
-                {
+        }else if((Types)currentChar.type == Types.Human){
+            foreach (int index in humanButtonIndexes){
+                if (index < buttons.Length){
                     buttons[index].SetActive(true);
-                    buttonTexts[index].text = index == 5 ? characterSpecificQuestions[checkCharacter()] : playerOptions[index];
-                }
-                else
-                {
+                    if (index == 5){
+                        buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
+                    } else{
+                        buttonTexts[index].text = playerOptions[index];
+                    }
+                } else{
                     Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
                 }
             }
+        } else{
+            Debug.LogWarning("Current character type is not AI or Human.");
         }
     }
 
@@ -196,14 +203,12 @@ public class Player : MonoBehaviour
         }
     }
 
-
     //After the player clicks the button, we display the question in the subtitles below
     public void DisplayWhatWasSaid(){ //Set subtitle panel to active, set the bool to false, and determine which string you're gonna show
         isTalking = true;
         panel.SetActive(true);
         DisplayString();
     }
-
 
     public void DisplayString(){
         characterHasToRespond = true;
@@ -218,7 +223,6 @@ public class Player : MonoBehaviour
         isTypingLetterByLetter = true;
         panelText.text = "";
         typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay)); //we start having it type out the dialogue letter by letter
-        // panelLetterCount = 0;
     }
     
     public int checkCharacter(){
@@ -236,7 +240,7 @@ public class Player : MonoBehaviour
                 // Debug.Log("Current Character is Garry");
                 return 2;
             } else{
-                Debug.Log("Character not found");
+                Debug.LogWarning($"Character not found");
                 return -1;
             }
         } else if((Types) currentChar.type == Types.Human){
@@ -261,11 +265,11 @@ public class Player : MonoBehaviour
                 // Debug.Log("Current Character is Kate");
                 return 7;
             } else{
-                Debug.Log("Character not found");
+                Debug.LogWarning($"Character not found");
                 return -1;
             }
         } else{
-            Debug.Log("Character not found");
+            Debug.LogWarning($"Character not found");
             return -1;
         }
     }
@@ -274,7 +278,6 @@ public class Player : MonoBehaviour
         // panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
-            // panelLetterCount++;
             yield return new WaitForSeconds(0.05f);
         }
         isTypingLetterByLetter = false;
@@ -302,40 +305,38 @@ public class Player : MonoBehaviour
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
-            
         } else{
             Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
         }
     }
 
-    // Start is called before the first frame update
     void Start(){
         Debug.Log("Player script is running");
         Time.timeScale = 1f;
         isPaused = false;
         isXara = true;
         LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
-        Debug.Log("Found lucas related objects");
+        // Debug.Log("Found lucas related objects");
         XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
-        Debug.Log("Found xara related objects");
+        // Debug.Log("Found xara related objects");
+        
         buttons = GameObject.FindGameObjectsWithTag("Buttons");
-        Debug.Log("Found buttons");
-        Debug.Log($"Found {buttons.Length} buttons.");
+        // Debug.Log("Found buttons");
+        // Debug.Log($"Found {buttons.Length} buttons.");
         buttons = buttons.OrderBy(button => button.name).ToArray();
         buttonTexts = new TextMeshProUGUI[buttons.Length];
-        for (int i = 0; i < buttons.Length; i++)
-        {
+        for (int i = 0; i < buttons.Length; i++){
             buttonTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-            Debug.Log($"Button {i} text is {buttonTexts[i].text}");
+            // Debug.Log($"Button {i} text is {buttonTexts[i].text}");
         }
+
         EnableXaraRelatedObjects();
         disableAllQuestionButtons();
         DisableLucasRelatedObjects();
     }
 
     // Update is called once per frame
-    void Update()
-    {   
+    void Update(){   
         if(isTypingLetterByLetter){ 
             isTalking = true;
         }

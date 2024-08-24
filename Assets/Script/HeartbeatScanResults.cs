@@ -15,8 +15,7 @@ public class HeartbeatScanResults : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         bool isSentient = heartbeatMinigame.GetComponent<Heartbeat>().confirmation;;
         if(isSentient == true)
         {

@@ -293,13 +293,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Lily ){
                 //Lily
                 switch (player.currentQuestionIndex){
@@ -338,13 +337,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
             } else if( (AINames) currentCharacter.characterName == AINames.Garry ){
                 //Garry
                 switch (player.currentQuestionIndex){
@@ -383,13 +381,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
             }
         } else if( (Types) currentCharacter.type == Types.Human ){ //kl human
             if( (HumanNames) currentCharacter.characterName == HumanNames.Caleb ){
@@ -430,13 +427,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
-                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Isaac ){
                 //Isaac
                 switch (player.currentQuestionIndex){
@@ -475,13 +471,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
-                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kim ){
                 //Kim
                 switch (player.currentQuestionIndex){
@@ -520,13 +515,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Timmy ){
                 //Timmy
                 switch (player.currentQuestionIndex){
@@ -565,13 +559,12 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
-                typingCoroutine =StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
+                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kate ){
                 //Kate
                 switch (player.currentQuestionIndex){
@@ -610,16 +603,14 @@ public class CharDialogue : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.Log("Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
+                        Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
                 Debug.Log(stringToDisplay);
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-                // stringToDisplayIndex = -1;
             }
         }
-        // player.characterHasToRespond = false;
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
@@ -633,10 +624,6 @@ public class CharDialogue : MonoBehaviour
     }
 
     void Update(){
-        // if(doneResponding){
-        //     player.characterHasToRespond = false;
-        // }
-
         if(isTypingLetterByLetter){
             isTalking = true;
         }
@@ -657,7 +644,6 @@ public class CharDialogue : MonoBehaviour
                 isTalking = false;
                 player.characterHasToRespond = false;
                 playerGameObject.SetActive(true);
-                // hasDisplayedFullLine = true;
             }
         }
     }

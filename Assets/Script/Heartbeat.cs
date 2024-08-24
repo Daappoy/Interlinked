@@ -17,12 +17,12 @@ public class Heartbeat : MonoBehaviour
     private int guarantee = 3;
     private bool isFirstTime = true;
     public bool confirmation = false;
+
     public void Start(){
         currentCharacter = player.currentChar;
     }
 
-    public void SpawnADot()
-    {
+    public void SpawnADot(){
         startButton.SetActive(false);
         newDot = Instantiate(DotPrefab, SpawnPointsDot[0]);
         // Debug.Log("Spawned a Dot");
@@ -31,8 +31,7 @@ public class Heartbeat : MonoBehaviour
         // dot.MoveRight();
     }
 
-    public void FixedUpdate()
-    {
+    public void FixedUpdate(){
         if (newDot != null && newDot.transform.position.x >= 10f){
             // Debug.Log("Dot is out of bounds");
             points = newDot.GetComponent<Dot>().points;
