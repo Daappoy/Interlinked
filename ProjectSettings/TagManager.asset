@@ -7,6 +7,8 @@ TagManager:
   - Line
   - LUCAS
   - Xara
+  - Buttons
+  - ButtonTexts
   layers:
   - Default
   - TransparentFX

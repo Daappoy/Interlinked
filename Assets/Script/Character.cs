@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
 
     public CharSpawner charSpawner;
     public bool canMove = false;
-    private bool courutineRan = false;
+    // private bool courutineRan = false;
     public float speed = 0.5f;
     public bool inInteview;
     
@@ -70,19 +70,6 @@ public class Character : MonoBehaviour
             // Debug.Log("Destroyed");
         }
     }
-    
-    
-
-
-    // IEnumerator WaitAndMove(int timeToWait)
-    // {
-    //     courutineRan = true;
-    //     if(courutineRan){
-    //         // Debug.Log("At chair");
-    //     }
-    //     yield return new WaitForSeconds(60);
-    //     canMove = true;
-    // }
 
     void MoveRight(){
         Vector3 newPosition = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);

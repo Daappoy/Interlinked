@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine.UI;
+using System.Linq;
 
 public class Player : MonoBehaviour
 {
@@ -20,26 +17,10 @@ public class Player : MonoBehaviour
     
     // Question Buttons
         public GameObject questionsPanel;
-        public GameObject button0;
-        public GameObject button1;
-        public GameObject button2;
-        public GameObject button3;
-        public GameObject button4;
-        public GameObject button5;
-        public GameObject button6;
-        public GameObject button7;
-        public GameObject button8;
-        public GameObject button9;
-        public TextMeshProUGUI button0Text;
-        public TextMeshProUGUI button1Text;
-        public TextMeshProUGUI button2Text;
-        public TextMeshProUGUI button3Text;
-        public TextMeshProUGUI button4Text;
-        public TextMeshProUGUI button5Text;
-        public TextMeshProUGUI button6Text;
-        public TextMeshProUGUI button7Text;
-        public TextMeshProUGUI button8Text;
-        public TextMeshProUGUI button9Text;
+        public GameObject[] buttons;
+        public TextMeshProUGUI[] buttonTexts;
+        public int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
+        public int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
 
     //Subtitles
         public GameObject panel;
@@ -53,7 +34,6 @@ public class Player : MonoBehaviour
         public bool characterHasToRespond = false;
         private Coroutine typingCoroutine;
         public bool hasToSwitch = false;
-    //public GameObject MainMenuPanel;
     
     
     public bool isXara = false; //if we're playing as the human right now
@@ -107,46 +87,42 @@ public class Player : MonoBehaviour
     //function for each question button
     public void disableAllQuestionButtons(){
         questionsPanel.SetActive(false);
-        button0.SetActive(false);
-        button1.SetActive(false);
-        button2.SetActive(false);
-        button3.SetActive(false);
-        button4.SetActive(false);
-        button5.SetActive(false);
-        button6.SetActive(false);
-        button7.SetActive(false);
-        button8.SetActive(false);
-        button9.SetActive(false);
+        for(int i = 0; i < buttons.Length; i++){
+            buttons[i].SetActive(false);
+        }
     }
 
     public void enablePlayerQuestions(){
         questionsPanel.SetActive(true);
-        if( (Types) currentChar.type == Types.AI){
-            button0.SetActive(true);
-            button0Text.text = playerOptions[0];
-            button1.SetActive(true);
-            button1Text.text = playerOptions[1];
-            button3.SetActive(true);
-            button3Text.text = playerOptions[3];
-            button5.SetActive(true);
-            button5Text.text = characterSpecificQuestions[checkCharacter()];
-            button7.SetActive(true);
-            button7Text.text = playerOptions[7];
-            button9.SetActive(true);
-            button9Text.text = playerOptions[9];
-        } else if( (Types) currentChar.type == Types.Human){
-            button0.SetActive(true);
-            button0Text.text = playerOptions[0];
-            button2.SetActive(true);
-            button2Text.text = playerOptions[2];
-            button4.SetActive(true);
-            button4Text.text = playerOptions[4];
-            button6.SetActive(true);
-            button5.SetActive(true);
-            button5Text.text = characterSpecificQuestions[checkCharacter()];
-            button6Text.text = playerOptions[6];
-            button8.SetActive(true);
-            button8Text.text = playerOptions[8];
+        if ((Types)currentChar.type == Types.AI)
+        {
+            foreach (int index in aiButtonIndexes)
+            {
+                if (index < buttons.Length)
+                {
+                    buttons[index].SetActive(true);
+                    buttonTexts[index].text = index == 5 ? characterSpecificQuestions[checkCharacter()] : playerOptions[index];
+                }
+                else
+                {
+                    Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
+                }
+            }
+        }
+        else if ((Types)currentChar.type == Types.Human)
+        {
+            foreach (int index in humanButtonIndexes)
+            {
+                if (index < buttons.Length)
+                {
+                    buttons[index].SetActive(true);
+                    buttonTexts[index].text = index == 5 ? characterSpecificQuestions[checkCharacter()] : playerOptions[index];
+                }
+                else
+                {
+                    Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
+                }
+            }
         }
     }
 
@@ -334,11 +310,24 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        Debug.Log("Player script is running");
         Time.timeScale = 1f;
         isPaused = false;
         isXara = true;
         LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
+        Debug.Log("Found lucas related objects");
         XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
+        Debug.Log("Found xara related objects");
+        buttons = GameObject.FindGameObjectsWithTag("Buttons");
+        Debug.Log("Found buttons");
+        Debug.Log($"Found {buttons.Length} buttons.");
+        buttons = buttons.OrderBy(button => button.name).ToArray();
+        buttonTexts = new TextMeshProUGUI[buttons.Length];
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttonTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
+            Debug.Log($"Button {i} text is {buttonTexts[i].text}");
+        }
         EnableXaraRelatedObjects();
         disableAllQuestionButtons();
         DisableLucasRelatedObjects();
@@ -411,10 +400,6 @@ public class Player : MonoBehaviour
         foreach(GameObject obj in XaraRelatedObjects){
             obj.SetActive(false);
         }
-    }
-
-    public void FixedUpdate(){
-    
     }
 
     public void PauseGame()

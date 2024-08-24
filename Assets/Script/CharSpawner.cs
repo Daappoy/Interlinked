@@ -41,7 +41,7 @@ public class CharSpawner : MonoBehaviour
         }
         currentChara.type = randomNum;
 
-        //Determines the character name
+        //Generate character name
         if(currentChara.type == 0){ //If it's an AI
             do{ //Ensures that the same character is not spawned twice by checking it with the spawnedAI list
                 randomNum = Random.Range(0,3);
@@ -54,22 +54,47 @@ public class CharSpawner : MonoBehaviour
             spawnedHumans.Add(randomNum); //Adds the spawned character to the list
         }
         currentChara.characterName = randomNum;
-        // Debug.Log("Character name: " + currentChara.characterName);
-        // Debug.Log("Character type: " + currentChara.type);
-        // Debug.Log("Character stance: " + currentChara.stance);
-        
+
+        //Generate Stance
         int num = Random.Range(0,3);
-        if(num == 1){
+        if(num != 1){
             isSentient = true;
         } else{
             isSentient = false;
         }
-        isSentient = true;
-        currentChara.player = player;
         currentChara.stance = num; //Randomly determines the character's stance (Hostile, Neutral, or Compassionate)
+
+        currentChara.player = player;
         // Debug.Log("Setting current character from the player's pov to the one that just spawned");
         player.currentChar = currentChara; //Sets the current character to the spawned character
-        // Debug.Log("Player's current interviewee set");
+       // Debug.Log("Player's current interviewee set");
+
+        int currentCharacterIs = player.checkCharacter(); //Checks the character's type and name
+        if(currentCharacterIs == 0){ 
+            Debug.Log("Dorothy is the current character, she is an AI");
+            Debug.Log("Dorothy's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 1){ 
+            Debug.Log("Lily is the current character, she is an AI");
+            Debug.Log("Lily's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 2){
+            Debug.Log("Garry is the current character, he is an AI");
+            Debug.Log("Garry's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 3){
+            Debug.Log("Caleb is the current character, he is human");
+            Debug.Log("Caleb's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 4){
+            Debug.Log("Isaac is the current character, he is human");
+            Debug.Log("Isaac's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 5){
+            Debug.Log("Kim is the current character, she is human");
+            Debug.Log("Kim's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 6){
+            Debug.Log("Timmy is the current character, he is human");
+            Debug.Log("Timmy's stance: " + currentChara.stance);
+        } else if(currentCharacterIs == 7){
+            Debug.Log("Kate is the current character, she is human");
+            Debug.Log("Kate's stance: " + currentChara.stance);
+        }
         currentChara.canMove = true;
     }
 }
