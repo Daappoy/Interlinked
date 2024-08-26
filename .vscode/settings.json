@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "IGI.sln"
+    "dotnet.defaultSolution": "Interlinked.sln"
 }
