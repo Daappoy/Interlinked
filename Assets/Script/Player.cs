@@ -17,16 +17,15 @@ public class Player : MonoBehaviour
     
     // Question Buttons
         public GameObject questionsPanel;
-        public GameObject[] nonNeutralQuestionButtons;
-        public GameObject[] buttons;
-        public TextMeshProUGUI[] buttonTexts;
-        public int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
-        public int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
-
+        private GameObject[] buttons;
+        private TextMeshProUGUI[] buttonTexts;
+        private int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
+        private int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
+        private bool hasAskedQuestion;
     //Subtitles
         public GameObject panel;
         public TMP_Text panelText;
-        private string stringToDisplay;
+        public string stringToDisplay;
         public int currentQuestionIndex = 0;
         public int charSpecificQuestionNum = 0;
         // private int panelLetterCount;
@@ -34,16 +33,15 @@ public class Player : MonoBehaviour
         private bool isTalking = false; //player
         public bool characterHasToRespond = false;
         private Coroutine typingCoroutine;
-        public bool canSwitch = false;
     
     //Playable Character Related 
-        public bool isXara = false; //if we're playing as the human right now
-        public bool isLucas = false;
+        private bool isXara = false; //if we're playing as the human right now
+        private bool isLucas = false;
         public bool ranOnce = false;
         public GameObject switchCharacterButton;
         public Heartbeat heartbeat;
-        public GameObject[] XaraRelatedObjects;
-        public GameObject[] LucasRelatedObjects;
+        private GameObject[] XaraRelatedObjects;
+        private GameObject[] LucasRelatedObjects;
         public GameObject[] lines;
 
 
@@ -111,10 +109,16 @@ public class Player : MonoBehaviour
         if((Types)currentChar.type == Types.AI){
             foreach (int index in aiButtonIndexes){
                 if (index < buttons.Length){
-                    buttons[index].SetActive(true);
                     if (index == 5){
+                        buttons[index].SetActive(true);
                         buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
-                    }else{
+                    } else if(index == 7 || index == 9){
+                        if(heartbeat.confirmation == 1){
+                            buttons[index].SetActive(true);
+                            buttonTexts[index].text = playerOptions[index];
+                        }
+                    } else{
+                        buttons[index].SetActive(true);
                         buttonTexts[index].text = playerOptions[index];
                     }
                 }
@@ -125,10 +129,16 @@ public class Player : MonoBehaviour
         } else if((Types)currentChar.type == Types.Human){
             foreach (int index in humanButtonIndexes){
                 if (index < buttons.Length){
-                    buttons[index].SetActive(true);
                     if (index == 5){
+                        buttons[index].SetActive(true);
                         buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
+                    } else if(index == 6 || index == 8){
+                        if(heartbeat.confirmation == 1){
+                            buttons[index].SetActive(true);
+                            buttonTexts[index].text = playerOptions[index];
+                        }
                     } else{
+                        buttons[index].SetActive(true);
                         buttonTexts[index].text = playerOptions[index];
                     }
                 } else{
@@ -142,70 +152,105 @@ public class Player : MonoBehaviour
 
     public void question0Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 0 was picked");
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question1Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 1 was picked");
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question2Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 2 was picked");
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question3Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 3 was picked");
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question4Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 4 was picked");
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question5Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 5 was picked");
             disableAllQuestionButtons();
-            currentQuestionIndex = 5;    
+            currentQuestionIndex = 5;   
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex); 
             DisplayWhatWasSaid();
         }
     }
     public void question6Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 6 was picked");
             disableAllQuestionButtons();
+            currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 6;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question7Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 7 was picked");
             disableAllQuestionButtons();
+            currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 7;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question8Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 8 was picked");
             disableAllQuestionButtons();
+            currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 8;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
     public void question9Picked(){
         if(!currentChar.canMove){
+            // Debug.Log("Question 9 was picked");
+            disableAllQuestionButtons();
+            currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 9;
+            hasAskedQuestion = true;
+            // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
     }
@@ -218,6 +263,7 @@ public class Player : MonoBehaviour
     }
 
     public void DisplayString(){
+        // Debug.Log("Display string's current question index is: " + currentQuestionIndex);
         characterHasToRespond = true;
         if(currentQuestionIndex == 5){ //if it's a character specific question, we use the character specific question array
             charSpecificQuestionNum = checkCharacter();
@@ -227,6 +273,7 @@ public class Player : MonoBehaviour
             // Debug.Log("The question index is: " + currentQuestionIndex);
             stringToDisplay = playerOptions[currentQuestionIndex];
         }
+        // Debug.Log("String to display is: " + stringToDisplay);
         heartbeat.upperMonitorText.text = stringToDisplay;
         isTypingLetterByLetter = true;
         panelText.text = "";
@@ -283,15 +330,35 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
+        // Debug.Log("In the coroutine of typing letter by letter, string to display is:");
+        panelText.text = "";
+        Debug.Log(stringToDisplay);
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
             yield return new WaitForSeconds(0.05f);
         }
         isTypingLetterByLetter = false;
+        isTalking = false;
     }
     
     public void SwitchActivePlayableCharacter(){
+        stringToDisplay = "";
+        panelText.text = "";
+
         switchCharacterButton.SetActive(false);
+        if(isTypingLetterByLetter){
+            StopCoroutine(typingCoroutine);
+            isTypingLetterByLetter = false;
+        }
+
+        if(isTalking){
+            isTalking = false;
+        }
+
+
+        if(characterHasToRespond){
+            characterHasToRespond = false;
+        }
 
         if(ranOnce == true){
             ranOnce = false;
@@ -300,23 +367,29 @@ public class Player : MonoBehaviour
         if(isLucas){
             isLucas = false;
             isXara = true;
+            hasAskedQuestion = false;
             StopCoroutine(typingCoroutine);
             panelText.text = "";
-            stringToDisplay = "So according to our information...";
+            stringToDisplay = "Let's see...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             DisableLucasRelatedObjects();
             EnableXaraRelatedObjects();
             enablePlayerQuestions();
+            if(!isTalking && characterHasToRespond == false && currentChar.stanceWasRevealed == true && (Stance) currentChar.stance == Stance.Neutral){
+                StopCoroutine(typingCoroutine);
+                panelText.text = "";
+                typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
+                disableAllQuestionButtons();
+            } 
         } else if(isXara){
             isLucas = true;
             isXara = false;
             foreach(GameObject line in lines){
                 line.SetActive(false);
             }
-            
             StopCoroutine(typingCoroutine);
             panelText.text = "";
-            stringToDisplay = "Let's see what I can do";
+            stringToDisplay = "Let me analyze that...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
@@ -326,7 +399,7 @@ public class Player : MonoBehaviour
     }
 
     void Start(){
-        Debug.Log("Player script is running");
+        // Debug.Log("Player script is running");
         Time.timeScale = 1f;
         isPaused = false;
         isXara = true;
@@ -336,7 +409,7 @@ public class Player : MonoBehaviour
         // Debug.Log("Found xara related objects");
         
         lines = GameObject.FindGameObjectsWithTag("Line");
-        Debug.Log("Found heartbeat scan's lines");
+        // Debug.Log("Found heartbeat scan's lines");
 
         buttons = GameObject.FindGameObjectsWithTag("Buttons");
         // Debug.Log("Found buttons");
@@ -355,10 +428,6 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        // if(canSwitch){
-        //     canSwitch = false;
-        //     can
-        // }
 
         if(isTypingLetterByLetter){ 
             isTalking = true;
@@ -378,15 +447,23 @@ public class Player : MonoBehaviour
                 } else if(!isTalking && characterHasToRespond == true){
                     // Debug.Log("Waiting for character to respond...");
                     characterResponds();
-                } else if(!isTalking && characterHasToRespond == false){
-                    // Debug.Log("Character has responded, sending them away...");
+                } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == false){
+                    // Debug.Log("Character has responded");
                     if(!ranOnce && typingCoroutine != null){
                         StopCoroutine(typingCoroutine);
                         panelText.text = "";
                         typingCoroutine = StartCoroutine(TypeLetterByLetter("Alright then, what do you think Lucas?"));
                         ranOnce = true;
-                    }        
-                }
+                    }
+
+                    if(ranOnce){
+                        switchCharacterButton.SetActive(true);
+                    }
+                } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == true){
+                    StopCoroutine(typingCoroutine);
+                    panelText.text = "";
+                    typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
+                } 
             }
         }
 
@@ -450,8 +527,8 @@ public class Player : MonoBehaviour
     }
 
     private void characterResponds(){
+        // Debug.Log("Character responds function was ran");
         charDialogueScript.currentCharacter = currentChar;
-        // Debug.Log("Char Dialogue Script current char is set");
         panelText.text = "";
         charDialogueScript.DetermineDialogue();
     }

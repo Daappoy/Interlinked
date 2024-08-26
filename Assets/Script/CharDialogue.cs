@@ -254,7 +254,7 @@ public class CharDialogue : MonoBehaviour
         if(!isTalking){
             isTalking = true;
         }
-        Debug.Log("Player Question index: " + player.currentQuestionIndex);
+        // Debug.Log("Player Question index: " + player.currentQuestionIndex);
         if((Types) currentCharacter.type == Types.AI){ //kl AI
             if( (AINames) currentCharacter.characterName == AINames.Dorothy ){
                 //Dorothy
@@ -630,6 +630,8 @@ public class CharDialogue : MonoBehaviour
         }
         isTypingLetterByLetter = false;
         player.characterHasToRespond = false;
+        isTalking = false;
+        playerGameObject.SetActive(true);
     }
 
     void Update(){

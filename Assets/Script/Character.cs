@@ -34,7 +34,8 @@ public class Character : MonoBehaviour
     public int type;
     public int characterName;
     public int stance;
-    
+    public bool stanceWasRevealed = false;
+
     private Rigidbody2D rb2d;
 
     public CharSpawner charSpawner;
@@ -58,7 +59,7 @@ public class Character : MonoBehaviour
             canMove = false;
             if (player != null)
             {
-                Debug.Log("Player reference is valid. Calling enablePlayerQuestions.");
+                // Debug.Log("Player reference is valid. Calling enablePlayerQuestions.");
                 player.enablePlayerQuestions();
                 inInteview = true;
             }
