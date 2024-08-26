@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     //Interviewee
         public Character currentChar;
         public CharDialogue charDialogueScript;
+    
     //Pause menu
         public GameObject MainMenuBackground;
         private bool isPaused = false;
@@ -32,14 +33,17 @@ public class Player : MonoBehaviour
         private bool isTalking = false; //player
         public bool characterHasToRespond = false;
         private Coroutine typingCoroutine;
-        public bool hasToSwitch = false;
+        public bool canSwitch = false;
     
     //Playable Character Related 
         public bool isXara = false; //if we're playing as the human right now
         public bool isLucas = false;
+        public bool ranOnce = false;
+        public GameObject switchCharacterButton;
         public GameObject[] XaraRelatedObjects;
         public GameObject[] LucasRelatedObjects;
-    
+        public GameObject[] lines;
+
     public enum Types{
         AI,
         Human,
@@ -115,7 +119,7 @@ public class Player : MonoBehaviour
                     Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
                 }
             }
-        }else if((Types)currentChar.type == Types.Human){
+        } else if((Types)currentChar.type == Types.Human){
             foreach (int index in humanButtonIndexes){
                 if (index < buttons.Length){
                     buttons[index].SetActive(true);
@@ -275,7 +279,6 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
-        // panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
             yield return new WaitForSeconds(0.05f);
@@ -284,13 +287,14 @@ public class Player : MonoBehaviour
     }
     
     public void SwitchActivePlayableCharacter(){
-        if(hasToSwitch){
-            hasToSwitch = false;
+        if(ranOnce == true){
+            ranOnce = false;
         }
 
         if(isLucas){
             isLucas = false;
             isXara = true;
+            StopCoroutine(typingCoroutine);
             panelText.text = "";
             stringToDisplay = "So according to our information...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
@@ -300,6 +304,7 @@ public class Player : MonoBehaviour
         } else if(isXara){
             isLucas = true;
             isXara = false;
+            StopCoroutine(typingCoroutine);
             panelText.text = "";
             stringToDisplay = "Let's see what I can do";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
@@ -320,6 +325,9 @@ public class Player : MonoBehaviour
         XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
         // Debug.Log("Found xara related objects");
         
+        lines = GameObject.FindGameObjectsWithTag("Line");
+        Debug.Log("Found heartbeat scan's lines");
+
         buttons = GameObject.FindGameObjectsWithTag("Buttons");
         // Debug.Log("Found buttons");
         // Debug.Log($"Found {buttons.Length} buttons.");
@@ -336,29 +344,39 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(){   
+    void Update(){
+        // if(canSwitch){
+        //     canSwitch = false;
+        //     can
+        // }
+
         if(isTypingLetterByLetter){ 
             isTalking = true;
         }
-        
-        //Dialogue Shenanigans
-        if( Input.GetMouseButtonDown(0)){ //if the player clicks
-            // Debug.Log("Mouse Clicked");
-            if(isTypingLetterByLetter == true){ 
-                StopCoroutine(typingCoroutine);
-                isTypingLetterByLetter = false; 
-                Debug.Log("Showing full line...");
-                panel.SetActive(true);
-                Debug.Log("String to display is: " + stringToDisplay);
-                panelText.text = stringToDisplay;
-                isTalking = false; 
-            } else if(!isTalking && characterHasToRespond == true){
-                // Debug.Log("Waiting for character to respond...");
-                characterResponds();
-            } else if(!isTalking && characterHasToRespond == false){
-                // Debug.Log("Character has responded, sending them away...");
-                panelText.text = "Alright then, what do you think Lucas?";
-                hasToSwitch = true;
+        if(isXara){
+            //Dialogue Shenanigans
+            if( Input.GetMouseButtonDown(0)){ //if the player clicks
+                // Debug.Log("Mouse Clicked");
+                if(isTypingLetterByLetter == true){ 
+                    StopCoroutine(typingCoroutine);
+                    isTypingLetterByLetter = false; 
+                    Debug.Log("Showing full line...");
+                    panel.SetActive(true);
+                    Debug.Log("String to display is: " + stringToDisplay);
+                    panelText.text = stringToDisplay;
+                    isTalking = false; 
+                } else if(!isTalking && characterHasToRespond == true){
+                    // Debug.Log("Waiting for character to respond...");
+                    characterResponds();
+                } else if(!isTalking && characterHasToRespond == false){
+                    // Debug.Log("Character has responded, sending them away...");
+                    if(!ranOnce){
+                        StopCoroutine(typingCoroutine);
+                        panelText.text = "";
+                        typingCoroutine = StartCoroutine(TypeLetterByLetter("Alright then, what do you think Lucas?"));
+                        ranOnce = true;
+                    }        
+                }
             }
         }
 
@@ -402,6 +420,8 @@ public class Player : MonoBehaviour
             obj.SetActive(false);
         }
     }
+
+
 
     public void PauseGame()
     {
