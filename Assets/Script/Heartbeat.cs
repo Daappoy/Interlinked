@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Heartbeat : MonoBehaviour
 {   
     public Player player;
-    public GameObject resultPanel;
+    public TextMeshProUGUI upperMonitorText;
+    public TextMeshProUGUI lowerMonitorText;
+    public GameObject Sentient;
+    public GameObject NotSentient;
+    public GameObject spawnButton;
     public CharSpawner characterSpawner;
     public Character currentCharacter;
-    public GameObject startButton;
     public GameObject DotPrefab;
     public Transform[] SpawnPointsDot;
     private GameObject newDot;
@@ -16,19 +20,26 @@ public class Heartbeat : MonoBehaviour
     private int pity = 0;
     private int guarantee = 3;
     private bool isFirstTime = true;
-    public bool confirmation = false;
+    public int confirmation = -1;
 
     public void Start(){
+        Sentient.SetActive(false);
+        NotSentient.SetActive(false);
         currentCharacter = player.currentChar;
     }
 
     public void SpawnADot(){
-        startButton.SetActive(false);
+        Debug.Log("Spawning a Dot");
+        upperMonitorText.fontSize = 50;
+        upperMonitorText.text = "Scanning...";
+        lowerMonitorText.text = "";
+        foreach(GameObject line in player.lines){
+            line.SetActive(true);
+        }
+        
         newDot = Instantiate(DotPrefab, SpawnPointsDot[0]);
+        spawnButton.SetActive(false);
         // Debug.Log("Spawned a Dot");
-        // AssignNewDot();
-        // Dot dot = newDot.GetComponent<Dot>();
-        // dot.MoveRight();
     }
 
     public void FixedUpdate(){
@@ -38,40 +49,46 @@ public class Heartbeat : MonoBehaviour
             Debug.Log("Total points: " + points);
             Destroy(newDot);
             giveResults();
-            startButton.SetActive(true);
         }
     }
 
     public void giveResults(){
+        upperMonitorText.text = "";
+        upperMonitorText.fontSize = 18;
+        foreach(GameObject line in player.lines){
+            line.SetActive(false);
+        }
+
         if(points == 3){
             Debug.Log("Give Accurate Results");
-            
-            if(characterSpawner.isSentient){
-                //was lying
-                if(isFirstTime){
-                    confirmation = false;
-                    int randomNum = Random.Range(0, 4);
-                    pity = randomNum;
-                    isFirstTime = false;
-                    Debug.Log("Number to get the read whether they're sentient or not = " + guarantee);
-                    Debug.Log("Starting pity = "+ pity);
-                } else{
-                    Debug.Log("Current pity =" + pity);
-                    pity++;
-                }
 
-                if(pity == guarantee){
-                    Debug.Log("The AI/Human wasn't lying");
-                    confirmation = true;
-                } else {
-                    Debug.Log("Not Sure Yet");
-                    confirmation = false;
-                }
+            if(isFirstTime){
+                int randomNum = Random.Range(0, 4);
+                pity = randomNum;
+                isFirstTime = false;
+                Debug.Log("Number to get the read whether they're sentient or not = " + guarantee);
+                Debug.Log("Starting pity = "+ pity);
             } else{
-                //was telling the truth
+                Debug.Log("Current pity =" + pity);
+                pity++;
             }
-        } else {
-            Debug.Log("Say that you can't confirm the results");
-        }
+
+            if(pity >= guarantee){
+                Debug.Log("The AI / Human wasn't lying / was lying");
+                if(characterSpawner.isSentient){
+                    NotSentient.SetActive(false);
+                    Sentient.SetActive(true); 
+                } else {
+                    NotSentient.SetActive(true);
+                    Sentient.SetActive(false);
+                }
+            } else {
+                Debug.Log("Pity not yet at guarantee");
+            }
+        } 
+
+        // if(confirmation == -1){
+        //     Debug.Log("Not Sure Yet");
+        // }
     }
 }

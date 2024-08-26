@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharDialogue : MonoBehaviour
 {   
+    public Heartbeat heartbeat;
     public Character currentCharacter;
     public GameObject playerGameObject;
     public Player player;
@@ -297,6 +298,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (AINames) currentCharacter.characterName == AINames.Lily ){
@@ -341,6 +343,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (AINames) currentCharacter.characterName == AINames.Garry ){
@@ -385,6 +388,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             }
@@ -431,6 +435,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Isaac ){
@@ -475,6 +480,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kim ){
@@ -519,6 +525,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Timmy ){
@@ -563,6 +570,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kate ){
@@ -607,6 +615,7 @@ public class CharDialogue : MonoBehaviour
                         break;
                 }
                 Debug.Log(stringToDisplay);
+                heartbeat.lowerMonitorText.text = stringToDisplay;
                 isTypingLetterByLetter = true;
                 typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             }

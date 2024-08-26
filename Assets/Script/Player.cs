@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     
     // Question Buttons
         public GameObject questionsPanel;
+        public GameObject[] nonNeutralQuestionButtons;
         public GameObject[] buttons;
         public TextMeshProUGUI[] buttonTexts;
         public int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
@@ -40,9 +41,11 @@ public class Player : MonoBehaviour
         public bool isLucas = false;
         public bool ranOnce = false;
         public GameObject switchCharacterButton;
+        public Heartbeat heartbeat;
         public GameObject[] XaraRelatedObjects;
         public GameObject[] LucasRelatedObjects;
         public GameObject[] lines;
+
 
     public enum Types{
         AI,
@@ -224,6 +227,7 @@ public class Player : MonoBehaviour
             // Debug.Log("The question index is: " + currentQuestionIndex);
             stringToDisplay = playerOptions[currentQuestionIndex];
         }
+        heartbeat.upperMonitorText.text = stringToDisplay;
         isTypingLetterByLetter = true;
         panelText.text = "";
         typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay)); //we start having it type out the dialogue letter by letter
@@ -287,6 +291,8 @@ public class Player : MonoBehaviour
     }
     
     public void SwitchActivePlayableCharacter(){
+        switchCharacterButton.SetActive(false);
+
         if(ranOnce == true){
             ranOnce = false;
         }
@@ -304,6 +310,10 @@ public class Player : MonoBehaviour
         } else if(isXara){
             isLucas = true;
             isXara = false;
+            foreach(GameObject line in lines){
+                line.SetActive(false);
+            }
+            
             StopCoroutine(typingCoroutine);
             panelText.text = "";
             stringToDisplay = "Let's see what I can do";
@@ -370,7 +380,7 @@ public class Player : MonoBehaviour
                     characterResponds();
                 } else if(!isTalking && characterHasToRespond == false){
                     // Debug.Log("Character has responded, sending them away...");
-                    if(!ranOnce){
+                    if(!ranOnce && typingCoroutine != null){
                         StopCoroutine(typingCoroutine);
                         panelText.text = "";
                         typingCoroutine = StartCoroutine(TypeLetterByLetter("Alright then, what do you think Lucas?"));
