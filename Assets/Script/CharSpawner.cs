@@ -24,6 +24,9 @@ public class CharSpawner : MonoBehaviour
     public void SpawnACharacter(){ 
         //Spawns a character
         GameObject chara = Instantiate(charaPrefab, spawnpoints[0]);
+        for(int i = 0 ; i < 10; i++){
+            player.canAskQuestion[i] = true;
+        }
         heartbeat.confirmation = -1;
         heartbeat.isFirstTime = true;
         // Debug.Log("Spawned a character");

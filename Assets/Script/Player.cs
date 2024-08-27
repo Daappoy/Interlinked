@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
         private int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
         private int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
         private bool hasAskedQuestion;
+        public bool[] canAskQuestion; //0-9
+
     //Subtitles
         public GameObject panel;
         public TMP_Text panelText;
@@ -109,17 +111,21 @@ public class Player : MonoBehaviour
         if((Types)currentChar.type == Types.AI){
             foreach (int index in aiButtonIndexes){
                 if (index < buttons.Length){
-                    if (index == 5){
-                        buttons[index].SetActive(true);
-                        buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
-                    } else if(index == 7 || index == 9){
-                        if(heartbeat.confirmation == 1){
+                    if(canAskQuestion[index]){
+                        if (index == 5){
+                            buttons[index].SetActive(true);
+                            buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
+                        } else if(index == 7 || index == 9){
+                            if(heartbeat.confirmation == 1){
+                                buttons[index].SetActive(true);
+                                buttonTexts[index].text = playerOptions[index];
+                            }
+                        } else{
                             buttons[index].SetActive(true);
                             buttonTexts[index].text = playerOptions[index];
                         }
                     } else{
-                        buttons[index].SetActive(true);
-                        buttonTexts[index].text = playerOptions[index];
+                        Debug.Log($"Index {index} has already been asked so the button is disabled.");
                     }
                 }
                 else{
@@ -129,17 +135,21 @@ public class Player : MonoBehaviour
         } else if((Types)currentChar.type == Types.Human){
             foreach (int index in humanButtonIndexes){
                 if (index < buttons.Length){
-                    if (index == 5){
-                        buttons[index].SetActive(true);
-                        buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
-                    } else if(index == 6 || index == 8){
-                        if(heartbeat.confirmation == 1){
+                    if(canAskQuestion[index]){
+                        if (index == 5){
+                            buttons[index].SetActive(true);
+                            buttonTexts[index].text = characterSpecificQuestions[checkCharacter()];
+                        } else if(index == 6 || index == 8){
+                            if(heartbeat.confirmation == 1){
+                                buttons[index].SetActive(true);
+                                buttonTexts[index].text = playerOptions[index];
+                            }
+                        } else{
                             buttons[index].SetActive(true);
                             buttonTexts[index].text = playerOptions[index];
                         }
                     } else{
-                        buttons[index].SetActive(true);
-                        buttonTexts[index].text = playerOptions[index];
+                        Debug.Log($"Index {index} has already been asked so the button is disabled.");
                     }
                 } else{
                     Debug.LogWarning($"Index {index} is out of bounds for buttons array.");
@@ -153,6 +163,7 @@ public class Player : MonoBehaviour
     public void question0Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 0 was picked");
+            canAskQuestion[0] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
             hasAskedQuestion = true;
@@ -163,6 +174,7 @@ public class Player : MonoBehaviour
     public void question1Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 1 was picked");
+            canAskQuestion[1] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
             hasAskedQuestion = true;
@@ -173,6 +185,7 @@ public class Player : MonoBehaviour
     public void question2Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 2 was picked");
+            canAskQuestion[2] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
             hasAskedQuestion = true;
@@ -183,6 +196,7 @@ public class Player : MonoBehaviour
     public void question3Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 3 was picked");
+            canAskQuestion[3] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
             hasAskedQuestion = true;
@@ -193,6 +207,7 @@ public class Player : MonoBehaviour
     public void question4Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 4 was picked");
+            canAskQuestion[4] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
             hasAskedQuestion = true;
@@ -203,6 +218,7 @@ public class Player : MonoBehaviour
     public void question5Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 5 was picked");
+            canAskQuestion[5] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 5;   
             hasAskedQuestion = true;
@@ -213,6 +229,7 @@ public class Player : MonoBehaviour
     public void question6Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 6 was picked");
+            canAskQuestion[6] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 6;
@@ -224,6 +241,7 @@ public class Player : MonoBehaviour
     public void question7Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 7 was picked");
+            canAskQuestion[7] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 7;
@@ -235,6 +253,7 @@ public class Player : MonoBehaviour
     public void question8Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 8 was picked");
+            canAskQuestion[8] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 8;
@@ -246,6 +265,7 @@ public class Player : MonoBehaviour
     public void question9Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 9 was picked");
+            canAskQuestion[9] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 9;
@@ -420,10 +440,13 @@ public class Player : MonoBehaviour
             buttonTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
             // Debug.Log($"Button {i} text is {buttonTexts[i].text}");
         }
-
         EnableXaraRelatedObjects();
         disableAllQuestionButtons();
         DisableLucasRelatedObjects();
+
+        for(int i = 0; i < 10; i++){
+            canAskQuestion[i] = true;
+        }
     }
 
     // Update is called once per frame
