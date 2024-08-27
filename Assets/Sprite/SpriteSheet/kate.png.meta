@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e8a93d9295ade04abe5d2f26f2837eb
+guid: 32bc2d727b52fe540a20b50e795385cc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 138
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,24 +93,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: caleb_anim_0
+      name: kate_0
       rect:
         serializedVersion: 2
         x: 1
@@ -118,56 +105,56 @@ TextureImporter:
         width: 131
         height: 117
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3171ca6fd15e9fb4d935d1df01209aab
-      internalID: 677360483
+      spriteID: 82b38d0903895cb42bd46e2c9b991f88
+      internalID: 1802555355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: caleb_anim_1
+      name: kate_1
       rect:
         serializedVersion: 2
-        x: 143
+        x: 133
         y: 0
         width: 131
         height: 117
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b4a76ee2824b9f408053dcc21d6824b
-      internalID: 638003832
+      spriteID: ae3c2bf9559d2e949b08e1a8b5b97769
+      internalID: -1065825135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: caleb_anim_2
+      name: kate_2
       rect:
         serializedVersion: 2
-        x: 285
+        x: 265
         y: 0
         width: 131
         height: 117
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dfe80a00e4cbc984aa7258699708f425
-      internalID: 509006836
+      spriteID: 8ee87afc4c3c312418b5f25a072d478d
+      internalID: 624591241
       vertices: []
       indices: 
       edges: []
@@ -183,9 +170,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      caleb_anim_0: 677360483
-      caleb_anim_1: 638003832
-      caleb_anim_2: 509006836
+      kate_0: 1802555355
+      kate_1: -1065825135
+      kate_2: 624591241
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

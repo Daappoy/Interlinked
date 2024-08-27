@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharDialogue : MonoBehaviour
 {   
+    public CharSpawner charSpawner;
     public Heartbeat heartbeat;
     public Character currentCharacter;
     public GameObject playerGameObject;
@@ -251,9 +252,18 @@ public class CharDialogue : MonoBehaviour
         if(panel.activeSelf == false){
             panel.SetActive(true);
         }
+        
         if(!isTalking){
             isTalking = true;
+            if(charSpawner.animator == null){
+                Debug.Log("Animator is null");
+                charSpawner.animator = charSpawner.GetComponent<Animator>();
+            } else if(charSpawner.animator != null){
+                Debug.Log("Animator is not null");
+            }
+            charSpawner.animator.SetBool("AnimatorIsTalking", true);
         }
+
         // Debug.Log("Player Question index: " + player.currentQuestionIndex);
         if((Types) currentCharacter.type == Types.AI){ //kl AI
             if( (AINames) currentCharacter.characterName == AINames.Dorothy ){
@@ -631,12 +641,14 @@ public class CharDialogue : MonoBehaviour
         isTypingLetterByLetter = false;
         player.characterHasToRespond = false;
         isTalking = false;
+        charSpawner.animator.SetBool("AnimatorIsTalking", false);
         playerGameObject.SetActive(true);
     }
 
     void Update(){
         if(isTypingLetterByLetter){
             isTalking = true;
+            charSpawner.animator.SetBool("AnimatorIsTalking", true);
         }
         
         if(Input.GetMouseButtonDown(0)){ //if the player clicks
@@ -653,6 +665,7 @@ public class CharDialogue : MonoBehaviour
                 panelText.text = stringToDisplay;
                 Debug.Log("String to display is: " + stringToDisplay);
                 isTalking = false;
+                charSpawner.animator.SetBool("AnimatorIsTalking", false);
                 player.characterHasToRespond = false;
                 playerGameObject.SetActive(true);
             }

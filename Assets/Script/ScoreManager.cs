@@ -78,25 +78,25 @@ public class ScoreManager : MonoBehaviour
             TotalEncounters_C = charSpawner.totalCount;
         }
         
-        // TotalEncounters.text = "Total Encounters: " + Mathf.Round(TotalEncounters_C);
-        // MistakesMade.text = "Mistakes Made: " + Mathf.Round(MistakesMade_C);
-        // // Totaltimetaken.text = "Total Time Taken: " + string.Format("{0:D2}:{1:D2}:{2:D2}", Totaltimetaken_C.Hours, Totaltimetaken_C.Minutes, Totaltimetaken_C.Seconds);
-        // AiReported.text = "AiReported: " + Mathf.Round(AiReported_C);
-        // Ailetgo.text = "AIs let go: " + Mathf.Round(Ailetgo_C);
-        // HumansReported.text = "Humans reported: " + Mathf.Round(HumansReported_C);
-        // Humansletgo.text = "Humans let go: " + Mathf.Round(Humansletgo_C);
-    }
+        if(decisionWasMade){
+            player.switchCharacterButton.SetActive(false);
+            player.StopCoroutine(player.typingCoroutine);
+            player.panelText.text = "";
 
-    public void Reform(){
-        if(!currentCharacter.canMove && !decisionWasMade){
-            decisionWasMade = true;
-            if(player.isLucas && !player.isXara){
-                player.SwitchActivePlayableCharacter();
-                player.switchCharacterButton.SetActive(false);
-            } 
             player.DisableLucasRelatedObjects();
             player.DisableXaraRelatedObjects();
             player.disableAllQuestionButtons();
+        }
+    }
+
+    public void Reform(){
+        if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
+            decisionWasMade = true;
+            if(player.isLucas && !player.isXara){
+                player.SwitchActivePlayableCharacter();
+                // player.switchCharacterButton.SetActive(false);
+            } 
+            
 
             if((Types) currentCharacter.type == Types.AI){
                 AiReported_C += 1;
@@ -121,15 +121,18 @@ public class ScoreManager : MonoBehaviour
     }
 
     public void LetGo(){
-        if(!currentCharacter.canMove && !decisionWasMade){
+        if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
             decisionWasMade = true;
+            player.playerCanAct = false;
             if(player.isLucas && !player.isXara){
                 player.SwitchActivePlayableCharacter();
-                player.switchCharacterButton.SetActive(false);
+                // player.switchCharacterButton.SetActive(false);
             } 
-            player.DisableLucasRelatedObjects();
-            player.DisableXaraRelatedObjects();
-            player.disableAllQuestionButtons();
+            // player.switchCharacterButton.SetActive(false);
+            // player.panelText.text = "";
+            // player.DisableLucasRelatedObjects();
+            // player.DisableXaraRelatedObjects();
+            // player.disableAllQuestionButtons();
 
             if((Types) currentCharacter.type == Types.AI){
                 Ailetgo_C += 1;

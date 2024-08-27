@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {   
+    
     public enum Types{
         AI,
         Human,
@@ -39,6 +40,7 @@ public class Character : MonoBehaviour
     private Rigidbody2D rb2d;
     
     public CharSpawner charSpawner;
+    public Animator animator;
     public bool canMove = false;
     // private bool courutineRan = false;
     public float speed = 0.5f;
@@ -46,10 +48,36 @@ public class Character : MonoBehaviour
     
     void Start(){
         rb2d = GetComponent<Rigidbody2D>();
-        
+        animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = charSpawner.animator.runtimeAnimatorController;
     }
     // Update is called once per frame
     
+    public void UpdateAnimator(Animator sourceAnimator)
+    {
+        foreach (AnimatorControllerParameter parameter in sourceAnimator.parameters)
+        {
+            switch (parameter.type)
+            {
+                case AnimatorControllerParameterType.Float:
+                    animator.SetFloat(parameter.name, sourceAnimator.GetFloat(parameter.name));
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    animator.SetInteger(parameter.name, sourceAnimator.GetInteger(parameter.name));
+                    break;
+                case AnimatorControllerParameterType.Bool:
+                    animator.SetBool(parameter.name, sourceAnimator.GetBool(parameter.name));
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    if (sourceAnimator.GetBool(parameter.name)) // Assuming trigger is set by a bool
+                    {
+                        animator.SetTrigger(parameter.name);
+                    }
+                    break;
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         if(canMove){
@@ -71,6 +99,10 @@ public class Character : MonoBehaviour
             charSpawner.SpawnACharacter();
             // Debug.Log("Destroyed");
         }
+    }
+
+    void Update(){
+        UpdateAnimator(charSpawner.animator);
     }
 
     void MoveRight(){

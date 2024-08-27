@@ -1606,6 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb42ad72824bdd44999748974cf05f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charSpawner: {fileID: 0}
   heartbeat: {fileID: 0}
   currentCharacter: {fileID: 0}
   playerGameObject: {fileID: 0}
@@ -3555,6 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb42ad72824bdd44999748974cf05f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charSpawner: {fileID: 1819697805}
   heartbeat: {fileID: 1853133883}
   currentCharacter: {fileID: 0}
   playerGameObject: {fileID: 2134892391}
@@ -5681,6 +5683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50edabe9879a16498c2495b5c49141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1819697807}
   scoreManager: {fileID: 1169247074}
   heartbeat: {fileID: 1853133883}
   player: {fileID: 2134892393}
@@ -5709,7 +5712,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.5, y: 1.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 821759589}
   m_Father: {fileID: 0}
@@ -5776,12 +5779,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 677360483, guid: 0e8a93d9295ade04abe5d2f26f2837eb, type: 3}
+  m_Sprite: {fileID: -87077277, guid: a3be642ae5748fa42aae63fe10563e5a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.9492754, y: 0.84782606}
+  m_Size: {x: 1.38, y: 1.17}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6639,6 +6642,7 @@ MonoBehaviour:
   buttons: []
   buttonTexts: []
   canAskQuestion: 
+  charSpawner: {fileID: 0}
   panel: {fileID: 396570288}
   panelText: {fileID: 912660555}
   stringToDisplay: 

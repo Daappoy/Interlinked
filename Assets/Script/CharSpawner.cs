@@ -7,8 +7,9 @@ using System.Linq;
 using TMPro;
 
 public class CharSpawner : MonoBehaviour
-{
-    public Sprite[][] animatedSprites;
+{   
+    
+    public Animator animator;
     public ScoreManager scoreManager;
     public Heartbeat heartbeat;
     public Player player;
@@ -110,6 +111,7 @@ public class CharSpawner : MonoBehaviour
         scoreManager.player = player;
         player.currentChar = currentChara;
         player.canAskQuestion = new bool[10];
+        
         for(int i = 0 ; i < 10; i++){
             player.canAskQuestion[i] = true;
         }
@@ -119,7 +121,7 @@ public class CharSpawner : MonoBehaviour
         player.isXara = true;
         player.isLucas = false;
         player.switchCharacterButton.SetActive(false);
-
+        
        // Debug.Log("Player's current interviewee set");
 
         int currentCharacterIs = player.checkCharacter(); //Checks the character's type and name
@@ -134,7 +136,7 @@ public class CharSpawner : MonoBehaviour
             Debug.Log("Character sprite is null");
         }
         currentChara.GetComponent<SpriteRenderer>().sprite = characterSprites[currentCharacterIs];
-
+        animator.SetInteger("AnimatorCurrentCharacter", currentCharacterIs);
         if(currentCharacterIs == 0){ 
             Debug.Log("Dorothy is the current character, she is an AI");
             if(currentChara.stance == 0){

@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
         public bool[] canAskQuestion; //0-9
 
     //Subtitles
+        public CharSpawner charSpawner;
         public GameObject panel;
         public TMP_Text panelText;
         public string stringToDisplay;
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
         private bool isTypingLetterByLetter = false;
         private bool isTalking = false; //player
         public bool characterHasToRespond = false;
-        private Coroutine typingCoroutine;
+        public Coroutine typingCoroutine;
     
     //Playable Character Related 
         public bool isXara = false; //if we're playing as the human right now
@@ -171,6 +172,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -193,6 +196,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -204,6 +208,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -215,6 +220,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -226,6 +232,7 @@ public class Player : MonoBehaviour
             disableAllQuestionButtons();
             currentQuestionIndex = 5;   
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex); 
             DisplayWhatWasSaid();
         }
@@ -238,6 +245,7 @@ public class Player : MonoBehaviour
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 6;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -250,6 +258,7 @@ public class Player : MonoBehaviour
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 7;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -262,6 +271,7 @@ public class Player : MonoBehaviour
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 8;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -274,6 +284,7 @@ public class Player : MonoBehaviour
             currentChar.stanceWasRevealed = true;
             currentQuestionIndex = 9;
             hasAskedQuestion = true;
+            playerCanAct = true;
             // Debug.Log("Current question index is: " + currentQuestionIndex);
             DisplayWhatWasSaid();
         }
@@ -598,6 +609,7 @@ public class Player : MonoBehaviour
     public void sendAwayCharacter(){
         // isDoneWithCharacter = true;
         currentChar.canMove = true;
+        charSpawner.animator.SetBool("AnimatorIsMoving", true);
     }
 
     private IEnumerator WaitCoroutine(){
