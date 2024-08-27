@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
@@ -17,8 +18,9 @@ public class Player : MonoBehaviour
     
     // Question Buttons
         public GameObject questionsPanel;
-        private GameObject[] buttons;
-        private TextMeshProUGUI[] buttonTexts;
+        public GameObject[] buttons;
+        public TextMeshProUGUI[] buttonTexts;
+
         private int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
         private int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
         private bool hasAskedQuestion;
@@ -37,15 +39,17 @@ public class Player : MonoBehaviour
         private Coroutine typingCoroutine;
     
     //Playable Character Related 
-        private bool isXara = false; //if we're playing as the human right now
-        private bool isLucas = false;
+        public bool isXara = false; //if we're playing as the human right now
+        public Sprite xaraSprite;
+        public bool isLucas = false;
+        public Sprite lucasSprite;
         public bool ranOnce = false;
         public GameObject switchCharacterButton;
         public Heartbeat heartbeat;
-        private GameObject[] XaraRelatedObjects;
-        private GameObject[] LucasRelatedObjects;
+        public GameObject[] XaraRelatedObjects;
+        public GameObject[] LucasRelatedObjects;
         public GameObject[] lines;
-
+        public bool playerCanAct = true;
 
     public enum Types{
         AI,
@@ -389,12 +393,47 @@ public class Player : MonoBehaviour
             isXara = true;
             hasAskedQuestion = false;
             StopCoroutine(typingCoroutine);
+            playerCanAct = false;
             panelText.text = "";
             stringToDisplay = "Let's see...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+            StartCoroutine(WaitCoroutine());
+
             DisableLucasRelatedObjects();
             EnableXaraRelatedObjects();
             enablePlayerQuestions();
+
+            
+            if((Types) currentChar.type == Types.AI && currentChar.stanceWasRevealed == false){
+                bool canNoLongerAskAnyQuestions = true;
+                for(int i = 0; i < aiButtonIndexes.Length-2; i++){
+                    if(canAskQuestion[aiButtonIndexes[i]]){
+                        canNoLongerAskAnyQuestions = false;
+                    }
+                }
+
+                if(canNoLongerAskAnyQuestions){
+                    StopCoroutine(typingCoroutine);
+                    panelText.text = "";
+                    typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
+                    disableAllQuestionButtons();
+                }
+            } else if((Types) currentChar.type == Types.Human && currentChar.stanceWasRevealed == false){
+                bool canNoLongerAskAnyQuestions = true;
+                for(int i = 0; i < humanButtonIndexes.Length-2; i++){
+                    if(canAskQuestion[humanButtonIndexes[i]]){
+                        canNoLongerAskAnyQuestions = false;
+                    }
+                }
+
+                if(canNoLongerAskAnyQuestions){
+                    StopCoroutine(typingCoroutine);
+                    panelText.text = "";
+                    typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
+                    disableAllQuestionButtons();
+                }
+            }
+
             if(!isTalking && characterHasToRespond == false && currentChar.stanceWasRevealed == true && (Stance) currentChar.stance == Stance.Neutral){
                 StopCoroutine(typingCoroutine);
                 panelText.text = "";
@@ -402,17 +441,22 @@ public class Player : MonoBehaviour
                 disableAllQuestionButtons();
             } 
         } else if(isXara){
+            // Debug.Log("Found heartbeat scan's lines");
             isLucas = true;
             isXara = false;
-            foreach(GameObject line in lines){
-                line.SetActive(false);
-            }
             StopCoroutine(typingCoroutine);
+            playerCanAct = false;
             panelText.text = "";
             stringToDisplay = "Let me analyze that...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+            StartCoroutine(WaitCoroutine());
+
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
+            lines = GameObject.FindGameObjectsWithTag("Line");
+            foreach(GameObject line in lines){
+                line.SetActive(false);
+            }
         } else{
             Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
         }
@@ -423,30 +467,18 @@ public class Player : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         isXara = true;
-        LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
+        isLucas = false;
+        
         // Debug.Log("Found lucas related objects");
-        XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
+        
         // Debug.Log("Found xara related objects");
         
         lines = GameObject.FindGameObjectsWithTag("Line");
         // Debug.Log("Found heartbeat scan's lines");
 
-        buttons = GameObject.FindGameObjectsWithTag("Buttons");
-        // Debug.Log("Found buttons");
-        // Debug.Log($"Found {buttons.Length} buttons.");
-        buttons = buttons.OrderBy(button => button.name).ToArray();
-        buttonTexts = new TextMeshProUGUI[buttons.Length];
-        for (int i = 0; i < buttons.Length; i++){
-            buttonTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-            // Debug.Log($"Button {i} text is {buttonTexts[i].text}");
-        }
         EnableXaraRelatedObjects();
         disableAllQuestionButtons();
         DisableLucasRelatedObjects();
-
-        for(int i = 0; i < 10; i++){
-            canAskQuestion[i] = true;
-        }
     }
 
     // Update is called once per frame
@@ -456,37 +488,44 @@ public class Player : MonoBehaviour
             isTalking = true;
         }
         if(isXara){
-            //Dialogue Shenanigans
-            if( Input.GetMouseButtonDown(0)){ //if the player clicks
-                // Debug.Log("Mouse Clicked");
-                if(isTypingLetterByLetter == true){ 
-                    StopCoroutine(typingCoroutine);
-                    isTypingLetterByLetter = false; 
-                    Debug.Log("Showing full line...");
-                    panel.SetActive(true);
-                    Debug.Log("String to display is: " + stringToDisplay);
-                    panelText.text = stringToDisplay;
-                    isTalking = false; 
-                } else if(!isTalking && characterHasToRespond == true){
-                    // Debug.Log("Waiting for character to respond...");
-                    characterResponds();
-                } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == false){
-                    // Debug.Log("Character has responded");
-                    if(!ranOnce && typingCoroutine != null){
+                switchCharacterButton.GetComponent<Image>().sprite = lucasSprite;
+            if(switchCharacterButton.activeSelf){
+            }
+            if(playerCanAct){
+                //Dialogue Shenanigans
+                if( Input.GetMouseButtonDown(0)){ //if the player clicks
+                    // Debug.Log("Mouse Clicked");
+                    if(isTypingLetterByLetter == true){ 
+                        StopCoroutine(typingCoroutine);
+                        isTypingLetterByLetter = false; 
+                        Debug.Log("Showing full line...");
+                        panel.SetActive(true);
+                        Debug.Log("String to display is: " + stringToDisplay);
+                        panelText.text = stringToDisplay;
+                        isTalking = false; 
+                    } else if(!isTalking && characterHasToRespond == true){
+                        // Debug.Log("Waiting for character to respond...");
+                        characterResponds();
+                    } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == false){
+                        // Debug.Log("Character has responded");
+                        if(!ranOnce && typingCoroutine != null){
+                            StopCoroutine(typingCoroutine);
+                            panelText.text = "";
+                            typingCoroutine = StartCoroutine(TypeLetterByLetter("Alright then, what do you think Lucas?"));
+                            ranOnce = true;
+                        }
+
+                        if(ranOnce){
+                            switchCharacterButton.SetActive(true);
+                        }
+                    } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == true){
                         StopCoroutine(typingCoroutine);
                         panelText.text = "";
-                        typingCoroutine = StartCoroutine(TypeLetterByLetter("Alright then, what do you think Lucas?"));
-                        ranOnce = true;
-                    }
-
-                    if(ranOnce){
-                        switchCharacterButton.SetActive(true);
-                    }
-                } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == true){
-                    StopCoroutine(typingCoroutine);
-                    panelText.text = "";
-                    typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
-                } 
+                        typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
+                    } 
+                }
+            } else{
+                Debug.Log("Be patient, wait and don't spam");
             }
         }
 
@@ -559,5 +598,11 @@ public class Player : MonoBehaviour
     public void sendAwayCharacter(){
         // isDoneWithCharacter = true;
         currentChar.canMove = true;
+    }
+
+    private IEnumerator WaitCoroutine(){
+        yield return new WaitForSeconds(3);
+        Debug.Log("Waited for 3 seconds");
+        playerCanAct = true;
     }
 }

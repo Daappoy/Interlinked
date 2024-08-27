@@ -9,6 +9,7 @@ TagManager:
   - Xara
   - Buttons
   - ButtonTexts
+  - Score
   layers:
   - Default
   - TransparentFX

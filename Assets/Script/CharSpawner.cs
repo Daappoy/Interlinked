@@ -2,35 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+using TMPro;
 
 public class CharSpawner : MonoBehaviour
 {
+    public Sprite[][] animatedSprites;
+    public ScoreManager scoreManager;
     public Heartbeat heartbeat;
     public Player player;
     public bool isSentient;
     public Transform[] spawnpoints;
+    public Sprite[] characterSprites = new Sprite[10];
     public GameObject charaPrefab;
     private List<int> spawnedHumans = new List<int>();
     private List<int> spawnedAI = new List<int>();
     private int humanCount;
     private int aiCount;
     private int randomNum;
-
+    public int totalCount;
     
     public void Start(){
+        player.XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
+        player.LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
+        player.buttons = GameObject.FindGameObjectsWithTag("Buttons");
+        // Debug.Log("Found buttons");
+        // Debug.Log($"Found {buttons.Length} buttons.");
+        player.buttons = player.buttons.OrderBy(button => button.name).ToArray();
+        player.buttonTexts = new TextMeshProUGUI[player.buttons.Length];
+        for (int i = 0; i < player.buttons.Length; i++){
+            player.buttonTexts[i] = player.buttons[i].GetComponentInChildren<TextMeshProUGUI>();
+            // Debug.Log($"Button {i} text is {buttonTexts[i].text}");
+        }
         SpawnACharacter();
     }
 
     public void SpawnACharacter(){ 
         //Spawns a character
+        if(totalCount == 8){
+            Debug.Log("All characters have been spawned");
+            scoreManager.displayEndResults();
+            //call end game function
+            return;
+        } 
         GameObject chara = Instantiate(charaPrefab, spawnpoints[0]);
-        for(int i = 0 ; i < 10; i++){
-            player.canAskQuestion[i] = true;
-        }
-        heartbeat.confirmation = -1;
-        heartbeat.isFirstTime = true;
+        totalCount++;
+        scoreManager.decisionWasMade = false;
+
+        
         // Debug.Log("Spawned a character");
         Character currentChara = chara.GetComponent<Character>();
+        currentChara.charSpawner = this;
 
         humanCount = spawnedHumans.Count;
         aiCount = spawnedAI.Count;
@@ -79,13 +102,39 @@ public class CharSpawner : MonoBehaviour
             currentChara.stance = 1;
         }
         
-
+        //Making sure other scripts are reset
+        heartbeat.confirmation = -1;
+        heartbeat.isFirstTime = true;
         currentChara.player = player;
-        // Debug.Log("Setting current character from the player's pov to the one that just spawned");
-        player.currentChar = currentChara; //Sets the current character to the spawned character
+        scoreManager.currentCharacter = currentChara;
+        scoreManager.player = player;
+        player.currentChar = currentChara;
+        player.canAskQuestion = new bool[10];
+        for(int i = 0 ; i < 10; i++){
+            player.canAskQuestion[i] = true;
+        }
+        player.EnableXaraRelatedObjects();
+        player.DisableLucasRelatedObjects();
+        
+        player.isXara = true;
+        player.isLucas = false;
+        player.switchCharacterButton.SetActive(false);
+
        // Debug.Log("Player's current interviewee set");
 
         int currentCharacterIs = player.checkCharacter(); //Checks the character's type and name
+        if(currentChara == null){
+            Debug.Log("Character is null");
+        }
+        if(currentChara.GetComponent<SpriteRenderer>().sprite == null){
+
+            Debug.Log("Character sprite is null");
+        }
+        if(characterSprites[currentCharacterIs] == null){
+            Debug.Log("Character sprite is null");
+        }
+        currentChara.GetComponent<SpriteRenderer>().sprite = characterSprites[currentCharacterIs];
+
         if(currentCharacterIs == 0){ 
             Debug.Log("Dorothy is the current character, she is an AI");
             if(currentChara.stance == 0){

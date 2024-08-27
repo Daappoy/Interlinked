@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
     public bool stanceWasRevealed = false;
 
     private Rigidbody2D rb2d;
-
+    
     public CharSpawner charSpawner;
     public bool canMove = false;
     // private bool courutineRan = false;
@@ -46,6 +46,7 @@ public class Character : MonoBehaviour
     
     void Start(){
         rb2d = GetComponent<Rigidbody2D>();
+        
     }
     // Update is called once per frame
     

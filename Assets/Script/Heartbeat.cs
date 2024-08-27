@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+
 
 public class Heartbeat : MonoBehaviour
 {   
@@ -21,7 +23,9 @@ public class Heartbeat : MonoBehaviour
     public GameObject spawnButton;
     public CharSpawner characterSpawner;
     public Character currentCharacter;
+    public GameObject LinePrefab;
     public GameObject DotPrefab;
+    public Transform[] SpawnPointsLine;
     public Transform[] SpawnPointsDot;
     private GameObject newDot;
     private int points;
@@ -47,13 +51,24 @@ public class Heartbeat : MonoBehaviour
         Debug.Log("Spawning a Dot");
         upperMonitorText.text = "Scanning...";
         lowerMonitorText.text = "";
-        foreach(GameObject line in player.lines){
-            line.SetActive(true);
-        }
+        SpawnLines();
         
         newDot = Instantiate(DotPrefab, SpawnPointsDot[0]);
         spawnButton.SetActive(false);
         // Debug.Log("Spawned a Dot");
+    }
+
+    public void SpawnLines()
+    {
+        int randomIndex = Random.Range(0, SpawnPointsLine.Length);
+
+        for(int i=0; i<SpawnPointsLine.Length; i++)
+        {
+            if(randomIndex != i)
+            {
+                Instantiate(LinePrefab, SpawnPointsLine[i].position,Quaternion.identity);
+            }
+        }
     }
 
     public void FixedUpdate(){
@@ -67,12 +82,16 @@ public class Heartbeat : MonoBehaviour
     }
 
     public void giveResults(){
-        upperMonitorText.text = "";
-        upperMonitorText.fontSize = 18;
-        foreach(GameObject line in player.lines){
+        GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
+        foreach(GameObject line in lines){
             line.SetActive(false);
         }
-
+        foreach(GameObject line in  lines){
+            Destroy(line);
+        }
+        
+        upperMonitorText.text = "";
+        upperMonitorText.fontSize = 18;
         if(points == 3){
             Debug.Log("Give Accurate Results");
 
@@ -102,6 +121,7 @@ public class Heartbeat : MonoBehaviour
                     player.panelText.text = "";
                     player.stringToDisplay = "We've got a hit Xara, that was a lie";
                     player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                    player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                     player.switchCharacterButton.SetActive(true);
                 } else {
                     confirmation = 0;
@@ -116,6 +136,7 @@ public class Heartbeat : MonoBehaviour
                     player.stringToDisplay = "I'm certain, this one's not hiding anything Xara";
                     currentCharacter.stanceWasRevealed = true;
                     player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                    player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                     player.switchCharacterButton.SetActive(true);
                 }
             } else {
@@ -124,6 +145,7 @@ public class Heartbeat : MonoBehaviour
                 player.panelText.text = "";
                 player.stringToDisplay = "We're going to need more data, Xara";
                 player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                 player.switchCharacterButton.SetActive(true);
             }
         } else{
@@ -131,6 +153,7 @@ public class Heartbeat : MonoBehaviour
             Unsure.SetActive(true);
             player.stringToDisplay = "Error... Unable to infer based on heartbeat data";
             player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+            player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
             player.switchCharacterButton.SetActive(true);
         }
 
