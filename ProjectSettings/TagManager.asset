@@ -10,6 +10,7 @@ TagManager:
   - Buttons
   - ButtonTexts
   - Score
+  - Audio
   layers:
   - Default
   - TransparentFX

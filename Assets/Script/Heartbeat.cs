@@ -15,6 +15,7 @@ public class Heartbeat : MonoBehaviour
     public Player player;
     public TextMeshProUGUI upperMonitorText;
     public TextMeshProUGUI lowerMonitorText;
+    public AudioManager audioManager;
     public GameObject Sentient;
     public GameObject NotSentient;
     public GameObject LieDetected;
@@ -36,6 +37,7 @@ public class Heartbeat : MonoBehaviour
     // public bool onEnableDone = false;
 
     public void OnEnable(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         points = 0;
         newDot = null;
         Sentient.SetActive(false);
@@ -48,6 +50,7 @@ public class Heartbeat : MonoBehaviour
     }
 
     public void SpawnADot(){
+        audioManager.PlaySFX(audioManager.ButtonClick);
         Debug.Log("Spawning a Dot");
         upperMonitorText.text = "Scanning...";
         lowerMonitorText.text = "";
@@ -83,6 +86,7 @@ public class Heartbeat : MonoBehaviour
 
     public void giveResults(){
         GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
+        audioManager.PlaySFX(audioManager.DiscepancyFound);
         foreach(GameObject line in lines){
             line.SetActive(false);
         }
@@ -91,7 +95,6 @@ public class Heartbeat : MonoBehaviour
         }
         
         upperMonitorText.text = "";
-        upperMonitorText.fontSize = 18;
         if(points == 3){
             Debug.Log("Give Accurate Results");
 
@@ -156,9 +159,5 @@ public class Heartbeat : MonoBehaviour
             player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
             player.switchCharacterButton.SetActive(true);
         }
-
-        // if(confirmation == -1){
-        //     Debug.Log("Not Sure Yet");
-        // }
     }
 }

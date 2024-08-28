@@ -14,11 +14,14 @@ public class Dot : MonoBehaviour
     private bool canAwardPoint;
     public int points = 0;
     public float speed = 2f;
+    public AudioManager audioManager;
+
 
     void Start(){
         // Debug.Log("Dot script is running");
         points = 0;
         rb = GetComponent<Rigidbody2D>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -31,6 +34,7 @@ public class Dot : MonoBehaviour
             // Debug.Log("Can get points");
             if(Input.GetKeyDown(KeyCode.E))
             {
+                audioManager.PlaySFX(audioManager.Thump);
                 Debug.Log("Points + 1!");
                 points += 1;
                 canAwardPoint = false;

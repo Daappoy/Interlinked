@@ -10,6 +10,8 @@ public class ScoreManager : MonoBehaviour
     public CharSpawner charSpawner;
     public Player player;
     public Character currentCharacter;
+    public AudioManager audioManager;
+
     public enum Types{
         AI,
         Human,
@@ -48,6 +50,7 @@ public class ScoreManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         if(SceneManager.GetActiveScene().buildIndex == 2){
             TotalEncounters.text += TotalEncounters_C.ToString();
             MistakesMade.text += MistakesMade_C.ToString();
@@ -80,9 +83,13 @@ public class ScoreManager : MonoBehaviour
         
         if(decisionWasMade){
             player.switchCharacterButton.SetActive(false);
-            player.StopCoroutine(player.typingCoroutine);
+            if(player.typingCoroutine != null){
+                player.StopCoroutine(player.typingCoroutine);
+                // player.panelText.text = "";
+            }
+            // player.StopCoroutine(player.typingCoroutine);
             player.panelText.text = "";
-
+            
             player.DisableLucasRelatedObjects();
             player.DisableXaraRelatedObjects();
             player.disableAllQuestionButtons();
@@ -92,6 +99,7 @@ public class ScoreManager : MonoBehaviour
     public void Reform(){
         if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
             decisionWasMade = true;
+            audioManager.PlaySFX(audioManager.Buzzer);
             if(player.isLucas && !player.isXara){
                 player.SwitchActivePlayableCharacter();
                 // player.switchCharacterButton.SetActive(false);
@@ -123,6 +131,7 @@ public class ScoreManager : MonoBehaviour
     public void LetGo(){
         if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
             decisionWasMade = true;
+            audioManager.PlaySFX(audioManager.Buzzer);
             player.playerCanAct = false;
             if(player.isLucas && !player.isXara){
                 player.SwitchActivePlayableCharacter();

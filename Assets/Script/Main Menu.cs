@@ -10,16 +10,20 @@ public class MainMenu : MonoBehaviour
     public GameObject MainMenuPanel;
     public GameObject OptionsPanel;
     public GameObject MainMenuBackGround;
-
+    public AudioManager audioManager;
     // void OnEnable()
     // {
     //     MainMenuPanel.SetActive(true);
     //     MainMenuBackGround.SetActive(true);
     //     OptionsPanel.SetActive(false);
     // }
-  
+    public void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+    
     public void OpenOptionsMenu()
     {
+        audioManager.PlaySFX(audioManager.ButtonClick);
         OptionsPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
         MainMenuBackGround.SetActive(false);
@@ -27,6 +31,7 @@ public class MainMenu : MonoBehaviour
 
     public void CloseOptionsMenu()
     {
+        audioManager.PlaySFX(audioManager.GeneralClick);
         OptionsPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
         MainMenuBackGround.SetActive(true);

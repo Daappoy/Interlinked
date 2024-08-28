@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharDialogue : MonoBehaviour
 {   
+    [Header ("References to other objects")]
     public CharSpawner charSpawner;
     public Heartbeat heartbeat;
     public Character currentCharacter;
@@ -13,6 +14,9 @@ public class CharDialogue : MonoBehaviour
     public Player player;
     public GameObject panel;
     public TMP_Text panelText;
+    public AudioManager audioManager;
+    
+    [Header ("Subtitles")]
     private string stringToDisplay; 
     private int stringToDisplayIndex;
     private bool isTypingLetterByLetter = false;
@@ -247,6 +251,10 @@ public class CharDialogue : MonoBehaviour
         "Yes, if they can understand and feel just like us, they deserve to be treated with the same respect and kindness.",
     };
 
+    public void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     public void DetermineDialogue(){
         playerGameObject.SetActive(false);
         if(panel.activeSelf == false){
@@ -255,12 +263,6 @@ public class CharDialogue : MonoBehaviour
         
         if(!isTalking){
             isTalking = true;
-            if(charSpawner.animator == null){
-                Debug.Log("Animator is null");
-                charSpawner.animator = charSpawner.GetComponent<Animator>();
-            } else if(charSpawner.animator != null){
-                Debug.Log("Animator is not null");
-            }
             charSpawner.animator.SetBool("AnimatorIsTalking", true);
         }
 
@@ -307,10 +309,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (AINames) currentCharacter.characterName == AINames.Lily ){
                 //Lily
                 switch (player.currentQuestionIndex){
@@ -352,10 +350,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (AINames) currentCharacter.characterName == AINames.Garry ){
                 //Garry
                 switch (player.currentQuestionIndex){
@@ -397,10 +391,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             }
         } else if( (Types) currentCharacter.type == Types.Human ){ //kl human
             if( (HumanNames) currentCharacter.characterName == HumanNames.Caleb ){
@@ -444,10 +434,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Isaac ){
                 //Isaac
                 switch (player.currentQuestionIndex){
@@ -489,10 +475,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kim ){
                 //Kim
                 switch (player.currentQuestionIndex){
@@ -534,10 +516,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Timmy ){
                 //Timmy
                 switch (player.currentQuestionIndex){
@@ -579,10 +557,6 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
             } else if( (HumanNames) currentCharacter.characterName == HumanNames.Kate ){
                 //Kate
                 switch (player.currentQuestionIndex){
@@ -624,12 +598,13 @@ public class CharDialogue : MonoBehaviour
                         Debug.LogWarning($"Error: Question index out of range, Current Question Index = "+ stringToDisplayIndex);
                         break;
                 }
-                Debug.Log(stringToDisplay);
-                heartbeat.lowerMonitorText.text = stringToDisplay;
-                isTypingLetterByLetter = true;
-                typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
+                
             }
         }
+        // Debug.Log(stringToDisplay);
+        heartbeat.lowerMonitorText.text = stringToDisplay;
+        isTypingLetterByLetter = true;
+        typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
@@ -653,8 +628,8 @@ public class CharDialogue : MonoBehaviour
         
         if(Input.GetMouseButtonDown(0)){ //if the player clicks
             if(isTypingLetterByLetter){ //if the dialogue is still typing
-                Debug.Log("Showing full line...");
-
+                // Debug.Log("Showing full line...");
+                audioManager.PlaySFX(audioManager.GeneralClick);
                 StopCoroutine(typingCoroutine);
                 isTypingLetterByLetter = false; 
                 if(panel.activeSelf == false){
@@ -663,7 +638,7 @@ public class CharDialogue : MonoBehaviour
                 
                 panelText.text = "";
                 panelText.text = stringToDisplay;
-                Debug.Log("String to display is: " + stringToDisplay);
+                // Debug.Log("String to display is: " + stringToDisplay);
                 isTalking = false;
                 charSpawner.animator.SetBool("AnimatorIsTalking", false);
                 player.characterHasToRespond = false;

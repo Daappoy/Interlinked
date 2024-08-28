@@ -8,11 +8,13 @@ using TMPro;
 
 public class CharSpawner : MonoBehaviour
 {   
-    
+    [Header ("References from other scripts")]
     public Animator animator;
     public ScoreManager scoreManager;
     public Heartbeat heartbeat;
     public Player player;
+
+    [Header ("For Spawning")]
     public bool isSentient;
     public Transform[] spawnpoints;
     public Sprite[] characterSprites = new Sprite[10];

@@ -6,40 +6,42 @@ using System.Linq;
 
 public class Player : MonoBehaviour
 {
-    
     //Interviewee
+        [Header ("Interviewee")]
         public Character currentChar;
         public CharDialogue charDialogueScript;
     
     //Pause menu
+        [Header ("Pause Menu")]
         public GameObject MainMenuBackground;
         private bool isPaused = false;
         private bool escapeKeyPressed = false;
-    
-    // Question Buttons
+
+    //Question Buttons
+        [Header ("Question Buttons Related")]
         public GameObject questionsPanel;
         public GameObject[] buttons;
         public TextMeshProUGUI[] buttonTexts;
-
         private int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
         private int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
         private bool hasAskedQuestion;
         public bool[] canAskQuestion; //0-9
 
     //Subtitles
+        [Header ("Subtitles")]
         public CharSpawner charSpawner;
         public GameObject panel;
         public TMP_Text panelText;
         public string stringToDisplay;
         public int currentQuestionIndex = 0;
         public int charSpecificQuestionNum = 0;
-        // private int panelLetterCount;
         private bool isTypingLetterByLetter = false;
         private bool isTalking = false; //player
         public bool characterHasToRespond = false;
         public Coroutine typingCoroutine;
     
-    //Playable Character Related 
+    //Playable Character Related
+        [Header ("Playable Character Related")]
         public bool isXara = false; //if we're playing as the human right now
         public Sprite xaraSprite;
         public bool isLucas = false;
@@ -49,26 +51,26 @@ public class Player : MonoBehaviour
         public Heartbeat heartbeat;
         public GameObject[] XaraRelatedObjects;
         public GameObject[] LucasRelatedObjects;
-        public GameObject[] lines;
         public bool playerCanAct = true;
+
+    //Audio
+        [Header ("Playable Character Related")]
+        public AudioManager audioManager;
 
     public enum Types{
         AI,
         Human,
     }
-
     public enum Stance{
         Hostile,
         Neutral,
         Compassionate,
     }
-
     public enum AINames{
         Dorothy,
         Lily,
         Garry,
     }
-
     public enum HumanNames{
         Caleb,
         Isaac,
@@ -103,7 +105,6 @@ public class Player : MonoBehaviour
         "What’s your favorite pastime with your family?", //Kate
     };
     
-    //function for each question button
     public void disableAllQuestionButtons(){
         questionsPanel.SetActive(false);
         for(int i = 0; i < buttons.Length; i++){
@@ -165,9 +166,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function for each question button
     public void question0Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 0 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[0] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 0;
@@ -180,6 +183,7 @@ public class Player : MonoBehaviour
     public void question1Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 1 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[1] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 1;
@@ -192,6 +196,7 @@ public class Player : MonoBehaviour
     public void question2Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 2 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[2] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 2;
@@ -204,6 +209,7 @@ public class Player : MonoBehaviour
     public void question3Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 3 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[3] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 3;
@@ -216,6 +222,7 @@ public class Player : MonoBehaviour
     public void question4Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 4 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[4] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 4;
@@ -228,6 +235,7 @@ public class Player : MonoBehaviour
     public void question5Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 5 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[5] = false;
             disableAllQuestionButtons();
             currentQuestionIndex = 5;   
@@ -240,6 +248,7 @@ public class Player : MonoBehaviour
     public void question6Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 6 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[6] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
@@ -253,6 +262,7 @@ public class Player : MonoBehaviour
     public void question7Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 7 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[7] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
@@ -266,6 +276,7 @@ public class Player : MonoBehaviour
     public void question8Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 8 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[8] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
@@ -279,6 +290,7 @@ public class Player : MonoBehaviour
     public void question9Picked(){
         if(!currentChar.canMove){
             // Debug.Log("Question 9 was picked");
+            audioManager.PlaySFX(audioManager.GeneralClick);
             canAskQuestion[9] = false;
             disableAllQuestionButtons();
             currentChar.stanceWasRevealed = true;
@@ -377,6 +389,7 @@ public class Player : MonoBehaviour
     }
     
     public void SwitchActivePlayableCharacter(){
+        audioManager.PlaySFX(audioManager.SwitchChara);
         stringToDisplay = "";
         panelText.text = "";
 
@@ -452,7 +465,6 @@ public class Player : MonoBehaviour
                 disableAllQuestionButtons();
             } 
         } else if(isXara){
-            // Debug.Log("Found heartbeat scan's lines");
             isLucas = true;
             isXara = false;
             StopCoroutine(typingCoroutine);
@@ -464,10 +476,6 @@ public class Player : MonoBehaviour
 
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
-            lines = GameObject.FindGameObjectsWithTag("Line");
-            foreach(GameObject line in lines){
-                line.SetActive(false);
-            }
         } else{
             Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
         }
@@ -479,14 +487,7 @@ public class Player : MonoBehaviour
         isPaused = false;
         isXara = true;
         isLucas = false;
-        
-        // Debug.Log("Found lucas related objects");
-        
-        // Debug.Log("Found xara related objects");
-        
-        lines = GameObject.FindGameObjectsWithTag("Line");
-        // Debug.Log("Found heartbeat scan's lines");
-
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         EnableXaraRelatedObjects();
         disableAllQuestionButtons();
         DisableLucasRelatedObjects();
@@ -505,6 +506,7 @@ public class Player : MonoBehaviour
             if(playerCanAct){
                 //Dialogue Shenanigans
                 if( Input.GetMouseButtonDown(0)){ //if the player clicks
+                    audioManager.PlaySFX(audioManager.GeneralClick);
                     // Debug.Log("Mouse Clicked");
                     if(isTypingLetterByLetter == true){ 
                         StopCoroutine(typingCoroutine);
@@ -536,7 +538,9 @@ public class Player : MonoBehaviour
                     } 
                 }
             } else{
-                Debug.Log("Be patient, wait and don't spam");
+                if(Input.GetMouseButtonDown(0)){
+                    Debug.Log("Be patient, wait and don't spam");
+                }
             }
         }
 
@@ -585,6 +589,7 @@ public class Player : MonoBehaviour
 
     public void PauseGame()
     {
+        audioManager.PlaySFX(audioManager.Pause);
         Time.timeScale = 0f;
        // MainMenuPanel.SetActive(true);
         MainMenuBackground.SetActive(true);
@@ -593,6 +598,7 @@ public class Player : MonoBehaviour
 
     public void ResumeGame()
     {
+        audioManager.PlaySFX(audioManager.ClickOnPause);
         Time.timeScale = 1f;
        // MainMenuPanel.SetActive(false);
         MainMenuBackground.SetActive(false);
