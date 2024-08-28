@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
-using UnityEditor.VersionControl;
+
+
 using UnityEngine;
 
 public class Dot : MonoBehaviour

@@ -8,9 +8,9 @@ public class QuitGame : MonoBehaviour
     {
         Application.Quit();
 
-        if(UnityEditor.EditorApplication.isPlaying == true)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
+        // if(UnityEditor.EditorApplication.isPlaying == true)
+        // {
+        //     UnityEditor.EditorApplication.isPlaying = false;
+        // }
     }
 }
