@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: IGI
+  productName: Interlinked
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -709,7 +709,7 @@ PlayerSettings:
   cloudProjectId: c0e9aa85-0491-441b-bc63-b25113b91cfa
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: IGI
+  projectName: Interlinked
   organizationId: yurrihh
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
