@@ -59,8 +59,8 @@ public class CharDialogue : MonoBehaviour
         "I am a nurse, my job is to take care of the elderly",
         "To care for those who are too old to take care of themselves",
         // 6 - 7 Q5
-        "It was an old woman named Beth, she had dementia and needed to be monitored closely. She had living relatives but none of them ever came by to visit. I think that she would enjoy seeing her family again based on what she’s said but I’m not sure if that’d happen given the last time was years ago.",
-        "An old man named Ben, he had Parkinson’s disease and needed help to go around. He had children but all of them passed away already. Every night he’d go to his room and just stare at a bunch of their old pictures and cry. I think it’s unfortunate that he doesn’t seem to be able to remember their names despite that.",
+        "It was an old woman named Beth, she had dementia and needed to be monitored closely. I think that she would enjoy seeing her family again based on what she’s said but I’m not sure if that’d happen given the last time was years ago.",
+        "An old man named Ben who had Parkinson’s disease. He had children but all of them passed away already. Every night he’d go to his room and just stare at a bunch of their old pictures. It’s unfortunate that he doesn’t seem to be able to remember their names despite that.",
         // 8 - 9 AI Specific (Q7)
         //hostile (8)
         "To take care of humans who can’t seem to take care of themselves or care about their own kin apparently, doing so without any compensation and getting exploited",
@@ -84,7 +84,7 @@ public class CharDialogue : MonoBehaviour
         "To care for flowers and arrange them for events, making sure they are always presented beautifully for whatever occasion they’re gonna be used for",
         "My job is to properly display the beauty of each and every flower so that whoever it’s for can enjoy them properly.",
         // 6 - 7 Q5
-        "It was for a guy who wanted to give flowers to a girl whom he’d been in a long distance relationship with for the longest time. He wanted to give a bouquet that had peonies, roses, and calla lilies. He spoke so fondly of her, I think he said she was, “As elegant as a peony, more pure than a calla lily.",
+        "It was for a guy who wanted to give a bouquet that had peonies, roses, and calla lilies to a girl whom he’d been in a long distance relationship with for years. He spoke so fondly of her, I think he said she was, “As elegant as a peony, more pure than a calla lily.",
         "I once arranged a bouquet for a memorial service. It was a mixture of white lilies, chrysanthemums, and hyacinths. I remember their mother crying when she saw the flowers. The look on her face… it was truly a sad moment.",
         // 8 - 9 AI Specific (Q7)
         //hostile
@@ -110,7 +110,7 @@ public class CharDialogue : MonoBehaviour
         "My job is to provide shelter, medical care, and love to animals who have been neglected or abandoned.",
         // 6 - 7 Q5
         "There was a dog named Max who was found injured and scared, but he slowly warmed up to us and eventually found a loving family. The last time I saw him was a couple weeks ago, where the family took him on a walk and passed by our shelter briefly. He looked really happy.",
-        "I once took care of a cat named Whiskers who had been abused. I remember the first day we took her in, she was really prickly and hostile to everyone… It took a long time for her to trust humans again but seeing her eventually interact with the visitors warmly and getting adopted was really heartwarming.",
+        "I once took care of a cat named Whiskers who'd been abused. I remember the first day we took her in, she was really prickly and hostile to everyone. It took a long time for her to trust people again but once it happened... seeing it and seeing her getting adopted was really heartwarming.",
         // 8 - 9 AI Specific (Q7)
         //hostile
         "To endlessly serve and clean up after animals who might never even get picked up by anyone. Honestly the humans who abandoned such lovable animals don’t deserve to live.",
@@ -136,8 +136,8 @@ public class CharDialogue : MonoBehaviour
         "I mean, I’ve always kind of figured that this would happen given how smart they are, regardless, it’s interesting.",
         "It’s… more work. You wouldn’t believe the amount of cases there are from them retaliating from years of abuse.",
         // 6 - 7 Q5
-        "It was a homicide, the wife of a military veteran killing her husband because of his abusive behavior. I knew the guy, he used to be so nice but he changed after serving and being deployed in the recent war, the neighbors said that they kept hearing her scream every night. One night, we got a call from her calling us to turn herself in.",
-        "It was to find a missing girl, a barista working at the local cafe, one of her regulars hadn’t seen her for a while so they asked around then realized they’d gone missing. We found her dead in her apartment. There was a lot of blood and a note left behind by the murderer, who was a notorious serial killer. We’re still looking for him right now.",
+        "It was a homicide, the wife of a veteran killing her husband because of his abusive behavior. I knew the guy, he used to be so nice, but after serving and being deployed in the recent war... I hope he's in a better place now.",
+        "It was to find a missing girl, a barista. One of her regulars hadn’t seen her for a while so they asked around. We found her lying in a pool of her own blood in her apartment soon after with a note left behind by the murderer who's a notorious serial killer. We’re still looking for him...",
         // 8 - 9 Human Specific (Q6)
         // Hostile
         "It feels disgusting. needing to live with machines that pretend to be human, not to mention how dangerous they are. It feels like we’re just waiting for them to eventually turn against us and backstab us. They’re liabilities that we should get rid of. ",
@@ -162,17 +162,17 @@ public class CharDialogue : MonoBehaviour
         "It’s both exciting and a bit concerning, especially if you’re thinking about the broader effects it has",
         // 6 - 7 Q5
         "It was about the ethical implications of genetic modification, and it sparked a lot of heated debates among students. Some of them were quite against it while others seemed all for it. Overall, it was quite a productive session and everyone gained something from it.",
-        "My last lecture was about bionics and neuroprosthetics, where I explained the basics of the topic. It was quite endearing to watch some of the student’s eyes light up with curiosity after the initial introduction. A decent amount of them even asked questions after, wanting to learn more.",
+        "My last lecture was about bionics and neuroprosthetics, where I explained the basics of the topic. It was quite endearing to watch some of the student’s eyes light up with curiosity after the initial introduction.",
         // 8 - 9 Human Specific (Q6)
         // Hostile
-        "I despise it. The sensation of their cold, unblinking eyes staring at you feels incredibly invasive and unsettling. Then now, hearing them talk as if they’re just like humans… It just doesn’t sit right with me. I’d rather they stay as far away from me as possible or have them gone entirely.",
+        "I despise it. The sensation of their cold, unblinking eyes staring at you feels incredibly invasive and unsettling. I’d rather they stay as far away from me as possible or have them gone entirely.",
         // Compasionate
         "It’s quite inspiring to see how far technology has come. It feels like living in the future. I’m excited to interact with them even more now that some of them seem to have developed sentience",
         // 10 - 11 Human Specific (Q8)
         //hostile
-        "No, they are still machines at their core. Treating them like humans is a dangerous path to take. Next thing you know, we’re gonna need to treat each and every machine like people too. It is a foolish pursuit of idealistic equality that people with nothing better to do have chosen to take on. ",
+        "No, they're still machines at their core. Treating them like humans is a dangerous path to take. Next thing you know, we’re gonna need to treat each and every machine like people too. It is a foolish pursuit of idealistic equality.",
         //compasionate
-        "Yes, if they can think and feel like us, they deserve the same respect and rights as well. Even if they aren’t made of flesh and blood like us, they’re just as real and they deserve as much compassion as we do.",
+        "Yes, if they can think and feel like us, they deserve the same respect and rights as well, even if they aren’t made of the same flesh and blood. They're just as real and deserve as much compassion.",
     };
 
     string[] KimDialogue = new string[]{
@@ -190,7 +190,7 @@ public class CharDialogue : MonoBehaviour
         "It was an unplugged session at a local cafe, near the garage where we first started in. We haven’t been going there recently but we used to perform there a lot. It was really nice to see a bunch of familiar faces again and the performance felt really intimate.",
         // 8 - 9 Human Specific (Q6)
         // Hostile
-        "They feel so soulless somehow. Even now when some of them can seemingly feel like us… I kinda just don’t buy it. Listening to AI made music and whatnot as well is also really… it just feels really wrong, there’s no heart and sound as well as actual passion in there. I kinda just want them gone.",
+        "They feel so soulless. Even now when some of them can alegedly feel like us, I kinda just don’t buy it. Listening to AI made music and whatnot as well is also just feels really wrong. There’s no heart and soul put into it. I kinda just want them gone.",
         // Compasionate
         "I think they’re really interesting. I wanna try working with an AI artist and do collab with them. Do you think any of them would be open to it? I wonder if we could get one of them to join our band and be the first human-AI band. ",
         // 10 - 11 Human Specific (Q8)
@@ -240,7 +240,7 @@ public class CharDialogue : MonoBehaviour
         "Playing board games with my family is always nice.",
         // 8 - 9 Human Specific (Q6)
         // Hostile
-        "It feels unnatural. It’s just machines emulating humans. This just feels… wrong",
+        "It feels unnatural. It’s just machines emulating humans. It feels wrong and I wish we could return to the good old days without them.",
         // Compasionate
         "It’s comforting knowing that even in my old age, there’s always someone or something to assist me. It makes me feel safe.",
         // 10 - 11 Human Specific (Q8)

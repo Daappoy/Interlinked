@@ -96,7 +96,7 @@ public class ScoreManager : MonoBehaviour
     public void Reform(){
         if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
             decisionWasMade = true;
-            audioManager.PlaySFX(audioManager.Buzzer);
+            audioManager.PlaySFX(audioManager.Walking);
             if(player.isLucas && !player.isXara){
                 player.SwitchActivePlayableCharacter();
                 // player.switchCharacterButton.SetActive(false);
@@ -104,8 +104,7 @@ public class ScoreManager : MonoBehaviour
             
 
             if((Types) currentCharacter.type == Types.AI){
-                AiReported_C += 1;
-            } else if((Types) currentCharacter.type == Types.Human){
+                AiReported_C += 1;            } else if((Types) currentCharacter.type == Types.Human){
                 HumansReported_C += 1;
             }
 
@@ -118,17 +117,17 @@ public class ScoreManager : MonoBehaviour
                 totalScore -= 10;
                 MistakesMade_C += 1;
             }
-            Debug.Log(totalScore);
+            Debug.Log("Total Score: " + totalScore);
             currentCharacter.canMove = true;
         } else{
-            Debug.Log("Decision already made");
+            Debug.Log("Decision already made - Reform");
         }
     }
 
     public void LetGo(){
         if(!currentCharacter.canMove && !decisionWasMade && player.charDialogueScript.isTalking == false){
             decisionWasMade = true;
-            audioManager.PlaySFX(audioManager.Buzzer);
+            audioManager.PlaySFX(audioManager.Walking);
             player.playerCanAct = false;
             if(player.isLucas && !player.isXara){
                 player.SwitchActivePlayableCharacter();
@@ -154,8 +153,10 @@ public class ScoreManager : MonoBehaviour
             } else if((Stance) currentCharacter.stance == Stance.Compassionate){
                 totalScore += 10;
             }
-            Debug.Log(totalScore);
+            Debug.Log("Total score: " + totalScore);
             currentCharacter.canMove = true;
+        } else{
+            Debug.Log("Decision already made - Let Go");
         }
     }
 

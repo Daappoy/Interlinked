@@ -53,7 +53,7 @@ public class Heartbeat : MonoBehaviour
 
     public void SpawnADot(){
         audioManager.PlaySFX(audioManager.ButtonClick);
-        Debug.Log("Spawning a Dot");
+        // Debug.Log("Spawning a Dot");
         upperMonitorText.text = "Scanning...";
         lowerMonitorText.text = "";
         SpawnLines();
@@ -98,16 +98,16 @@ public class Heartbeat : MonoBehaviour
         
         upperMonitorText.text = "";
         if(points == 3){
-            Debug.Log("Give Accurate Results");
+            Debug.Log("Guarantee reached, showing accurate results");
 
             if(isFirstTime){
                 int randomNum = Random.Range(0, 4);
                 pity = randomNum;
                 isFirstTime = false;
                 // Debug.Log("Number to get the read whether they're sentient or not = " + guarantee);
-                // Debug.Log("Starting pity = "+ pity);
+                Debug.Log("Starting pity = "+ pity);
             } else{
-                // Debug.Log("Current pity =" + pity);
+                Debug.Log("Current pity =" + pity);
                 pity++;
             }
 
@@ -145,7 +145,7 @@ public class Heartbeat : MonoBehaviour
                     player.switchCharacterButton.SetActive(true);
                 }
             } else {
-                Debug.Log("Pity not yet at guarantee, it's at " + pity);
+                // Debug.Log("Pity not yet at guarantee, it's at " + pity);
                 Unsure.SetActive(true);
                 panelText.text = "";
                 stringToDisplay = "We're going to need more data, Xara";
@@ -154,7 +154,7 @@ public class Heartbeat : MonoBehaviour
                 player.switchCharacterButton.SetActive(true);
             }
         } else{
-            Debug.Log("Failed minigame, give Inaccurate Results");
+            Debug.Log("Failed minigame, give inaccurate Results");
             Unsure.SetActive(true);
             stringToDisplay = "Error... Unable to infer based on heartbeat data";
             player.typingCoroutine = player.StartCoroutine(player.TypeLetterByLetter(stringToDisplay));

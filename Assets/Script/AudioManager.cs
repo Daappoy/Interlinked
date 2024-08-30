@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
   public AudioClip DiscepancyFound;
   public AudioClip SwitchChara;
   public AudioClip Thump;
+  public AudioClip Walking;
 
   private void Start()
   {

@@ -13,7 +13,7 @@ public class VolumeManager : MonoBehaviour
         
         if(PlayerPrefs.HasKey("value"))
         {
-            Debug.Log("ada key");
+            Debug.Log("There is a key");
             load();
         } else {
             PlayerPrefs.SetFloat("value", 1);

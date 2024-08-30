@@ -86,6 +86,10 @@ public class Character : MonoBehaviour
             }
         }
         
+        if(transform.position.x >= 10 && transform.position.x <= 10.1){
+            audioManager.PlaySFX(audioManager.Buzzer);
+        }
+
         if(transform.position.x > 14){
             Destroy(gameObject);
             audioManager.PlaySFX(audioManager.DoorClose);

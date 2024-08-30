@@ -127,14 +127,14 @@ public class CharSpawner : MonoBehaviour
 
         int currentCharacterIs = player.checkCharacter(); //Checks the character's type and name
         if(currentChara == null){
-            Debug.Log("Character is null");
+            Debug.LogWarning($"Character is null");
         }
         if(currentChara.GetComponent<SpriteRenderer>().sprite == null){
 
-            Debug.Log("Character sprite is null");
+            Debug.LogWarning($"Character sprite is null");
         }
         if(characterSprites[currentCharacterIs] == null){
-            Debug.Log("Character sprite is null");
+            Debug.LogWarning($"Character sprite is null");
         }
         currentChara.GetComponent<SpriteRenderer>().sprite = characterSprites[currentCharacterIs];
         animator.SetInteger("AnimatorCurrentCharacter", currentCharacterIs);
@@ -220,5 +220,6 @@ public class CharSpawner : MonoBehaviour
         }
         currentChara.canMove = true;
         audioManager.PlaySFX(audioManager.Buzzer);
+        audioManager.PlaySFX(audioManager.Walking);
     }
 }

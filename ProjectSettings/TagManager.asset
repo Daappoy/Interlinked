@@ -11,6 +11,9 @@ TagManager:
   - ButtonTexts
   - Score
   - Audio
+  - PageOne
+  - PageTwo
+  - PageThree
   layers:
   - Default
   - TransparentFX

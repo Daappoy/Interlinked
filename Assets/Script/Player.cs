@@ -394,7 +394,7 @@ public class Player : MonoBehaviour
         StartCoroutine(WaitCoroutine(0.5f));
         // Debug.Log("In the coroutine of typing letter by letter, string to display is:");
         panelText.text = "";
-        Debug.Log(stringToDisplay);
+        // Debug.Log(stringToDisplay);
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
             yield return new WaitForSeconds(0.05f);
@@ -481,7 +481,7 @@ public class Player : MonoBehaviour
             }
 
             if(!isTalking && characterHasToRespond == false && currentChar.stanceWasRevealed == true && (Stance) currentChar.stance == Stance.Neutral){
-                Debug.Log("Running line 464's condition");
+                // Debug.Log("Running line 464's condition");
                 StopCoroutine(typingCoroutine);
                 panelText.text = "";
                 typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
@@ -500,7 +500,7 @@ public class Player : MonoBehaviour
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
         } else{
-            Debug.Log("There's been an error, we don't know if the player is playing as Xara or Lucas");
+            Debug.LogWarning($"There's been an error, we don't know if the player is playing as Xara or Lucas");
         }
     }
 
