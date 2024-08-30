@@ -10,7 +10,7 @@ public class CharSpawner : MonoBehaviour
     public ScoreManager scoreManager;
     public Heartbeat heartbeat;
     public Player player;
-
+    public AudioManager audioManager;
     [Header ("For Spawning")]
     public bool isSentient;
     public Transform[] spawnpoints;
@@ -24,6 +24,7 @@ public class CharSpawner : MonoBehaviour
     public int totalCount;
     
     public void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         player.XaraRelatedObjects = GameObject.FindGameObjectsWithTag("Xara");
         player.LucasRelatedObjects = GameObject.FindGameObjectsWithTag("LUCAS");
         player.buttons = GameObject.FindGameObjectsWithTag("Buttons");
@@ -218,5 +219,6 @@ public class CharSpawner : MonoBehaviour
             }
         }
         currentChara.canMove = true;
+        audioManager.PlaySFX(audioManager.Buzzer);
     }
 }

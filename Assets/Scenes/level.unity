@@ -1809,8 +1809,8 @@ Transform:
   m_GameObject: {fileID: 427448964}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.444, y: -1.046, z: -0.2695418}
-  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_LocalPosition: {x: -0.1782, y: -1.0038, z: -0.2695418}
+  m_LocalScale: {x: 1.584975, y: 1.5738087, z: 1.75}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1066681905}
@@ -3209,7 +3209,7 @@ MonoBehaviour:
   ClickOnPause: {fileID: 8300000, guid: 73b65fdf6b2c7a94ea104c228ad506dc, type: 3}
   GeneralClick: {fileID: 8300000, guid: a3122cce5e3535147b8bc51968733c63, type: 3}
   ButtonClick: {fileID: 8300000, guid: 690f2b05ffda9c043bd00b4917fe2095, type: 3}
-  Buzzer: {fileID: 8300000, guid: dc070b54c6822bb4ba84a3ff2d600d41, type: 3}
+  Buzzer: {fileID: 8300000, guid: 4691acc8bbdef22439591e92b1d23dd8, type: 3}
   DoorClose: {fileID: 8300000, guid: 69c401d0209cc274bbdb46dcc09913c1, type: 3}
   DiscepancyFound: {fileID: 8300000, guid: 57aa095999bd9d44fb2dfb4492cce3fe, type: 3}
   SwitchChara: {fileID: 8300000, guid: 9f8fd1e0b5a325944be8cd0eb8abc8c5, type: 3}
@@ -6011,6 +6011,7 @@ MonoBehaviour:
   scoreManager: {fileID: 1169247074}
   heartbeat: {fileID: 1853133883}
   player: {fileID: 2134892393}
+  audioManager: {fileID: 0}
   isSentient: 0
   spawnpoints:
   - {fileID: 821759589}
@@ -6020,7 +6021,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2007608a31b50404f945f9ca5d7e293c, type: 3}
   - {fileID: 21300000, guid: 21af1cdaa4d062947aabd5fba0b02668, type: 3}
   - {fileID: 21300000, guid: 176ee5d75f2b52741bb869a2ec570cc3, type: 3}
-  - {fileID: 21300000, guid: ef61d80e44bef8f4aa1827ffd079ed12, type: 3}
+  - {fileID: 371505530, guid: d0be07bc58d98844fbe5121401435116, type: 3}
   - {fileID: 21300000, guid: a7102f5ba19e7974884beb7ff947c080, type: 3}
   - {fileID: 21300000, guid: 00aed544500c8224b871f842c44a7190, type: 3}
   charaPrefab: {fileID: 4614139415751108348, guid: b91d44136b667624ca1dfdea2b2d1bf3, type: 3}

@@ -523,7 +523,7 @@ public class Player : MonoBehaviour
             isTalking = true;
         }
         if(isXara){
-                switchCharacterButton.GetComponent<Image>().sprite = lucasSprite;
+            switchCharacterButton.GetComponent<Image>().sprite = lucasSprite;
             if(switchCharacterButton.activeSelf){
             }
             if(playerCanAct){
@@ -532,7 +532,7 @@ public class Player : MonoBehaviour
                     audioManager.PlaySFX(audioManager.GeneralClick);
                     // Debug.Log("Mouse Clicked");
                     if(isTypingLetterByLetter == true){ 
-                        Debug.Log("Going into update's if statement under if is typing letter by letter = true");
+                        // Debug.Log("Going into update's if statement under if is typing letter by letter = true");
                         StopCoroutine(typingCoroutine);
                         isTypingLetterByLetter = false; 
                         // Debug.Log("Showing full line...");
@@ -542,11 +542,11 @@ public class Player : MonoBehaviour
                         isTalking = false;
                         WaitCoroutine(3);
                     } else if(!isTalking && characterHasToRespond == true){
-                        Debug.Log("Going into update's else if statement under isnt talking and character has to respond");
+                        // Debug.Log("Going into update's else if statement under isnt talking and character has to respond");
                         // Debug.Log("Waiting for character to respond...");
                         characterResponds();
                     } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == false){
-                        Debug.Log("Going into update's else if statement under isnt talking, doesnt have to reply, has asked question but stance wasnt revealed");
+                        // Debug.Log("Going into update's else if statement under isnt talking, doesnt have to reply, has asked question but stance wasnt revealed");
                         // Debug.Log("Character has responded");
                         if(!ranOnce && typingCoroutine != null){
                             StopCoroutine(typingCoroutine);
@@ -648,7 +648,7 @@ public class Player : MonoBehaviour
     private IEnumerator WaitCoroutine(float time){
         playerCanAct = false;
         yield return new WaitForSeconds(time);
-        Debug.Log("Waited for 3 seconds");
+        // Debug.Log("Waited for 3 seconds");
         playerCanAct = true;
     }
 }
