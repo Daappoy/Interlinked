@@ -1058,8 +1058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -131, y: -121.5}
-  m_SizeDelta: {x: 48, y: 27}
+  m_AnchoredPosition: {x: -137.68791, y: -121.71517}
+  m_SizeDelta: {x: 44.9387, y: 26.5697}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267346965
 MonoBehaviour:
@@ -1719,8 +1719,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -88.51633, y: -87.895035}
-  m_SizeDelta: {x: 190.7737, y: -193.8823}
+  m_AnchoredPosition: {x: -84.1, y: -91.9}
+  m_SizeDelta: {x: 245.9592, y: -142.4594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &396570290
 MonoBehaviour:
@@ -1742,7 +1742,9 @@ MonoBehaviour:
   panel: {fileID: 396570288}
   panelText: {fileID: 912660555}
   audioManager: {fileID: 0}
+  stringToDisplay: 
   isTalking: 0
+  canSkip: 0
 --- !u!114 &396570291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,8 +2009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -37.3, y: -121.5}
-  m_SizeDelta: {x: 48, y: 27}
+  m_AnchoredPosition: {x: -49.963814, y: -121.71517}
+  m_SizeDelta: {x: 44.9387, y: 26.5697}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496939649
 MonoBehaviour:
@@ -2315,7 +2317,7 @@ Transform:
   m_GameObject: {fileID: 661727527}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.08, y: 6.74, z: 0.5}
+  m_LocalPosition: {x: -1.3, y: 6.74, z: 0.5}
   m_LocalScale: {x: 3.7100003, y: 3.7100003, z: 3.7100003}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2423,7 +2425,7 @@ Transform:
   m_GameObject: {fileID: 741633886}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.893, y: -0.449, z: -0.14}
+  m_LocalPosition: {x: -0.946, y: -0.449, z: -0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2849,8 +2851,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.8037, y: 0.000082016}
-  m_SizeDelta: {x: 663.1624, y: 76.118}
+  m_AnchoredPosition: {x: -0.00083637, y: 0.00010037}
+  m_SizeDelta: {x: 725.96, y: 127.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &912660555
 MonoBehaviour:
@@ -2872,10 +2874,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: This is all a placeholder text to see what would happen if you maxed out
+    the text with just a bunch of yap that was written for a character's reply. If
+    you're reading this, you're not supposed to, but regardless, Hi :D, this is Nick
+    from 30-8-2024, 12.38 p.m. talking to you in the future!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7848b9b689c752747955aa774f3099ad, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 8105205910175815801, guid: 7848b9b689c752747955aa774f3099ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2935,10 +2940,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 2.000824, w: 0.35715488}
+  m_margin: {x: 0, y: 0, z: -0.29885867, w: 1.6112709}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &912660556
@@ -3879,7 +3884,9 @@ MonoBehaviour:
   panel: {fileID: 396570288}
   panelText: {fileID: 912660555}
   audioManager: {fileID: 0}
+  stringToDisplay: 
   isTalking: 0
+  canSkip: 0
 --- !u!114 &1169247074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6137,6 +6144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2134892393}
+  panelText: {fileID: 0}
+  stringToDisplay: 
   upperMonitorText: {fileID: 837836051}
   lowerMonitorText: {fileID: 1482312318}
   audioManager: {fileID: 0}
@@ -6959,6 +6968,7 @@ MonoBehaviour:
   questionsPanel: {fileID: 837836048}
   buttons: []
   buttonTexts: []
+  hasAskedQuestion: 0
   canAskQuestion: 
   charSpawner: {fileID: 0}
   panel: {fileID: 396570288}

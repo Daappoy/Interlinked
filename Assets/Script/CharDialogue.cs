@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class CharDialogue : MonoBehaviour
 {   
@@ -17,11 +15,12 @@ public class CharDialogue : MonoBehaviour
     public AudioManager audioManager;
     
     [Header ("Subtitles")]
-    private string stringToDisplay; 
+    public string stringToDisplay; 
     private int stringToDisplayIndex;
     private bool isTypingLetterByLetter = false;
     public bool isTalking = false;
-    private Coroutine typingCoroutine;
+    public Coroutine typingCoroutine;
+    public bool canSkip;
 
     public enum Types{
         AI,
@@ -607,7 +606,14 @@ public class CharDialogue : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
     }
 
+    public IEnumerator WaitCoroutine(float time){
+        canSkip = false;
+        yield return new WaitForSeconds(time);
+        canSkip = true;
+    }
+
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
+        StartCoroutine(WaitCoroutine(0.5f));
         panelText.text = "";
         for(int i = 0; i < stringToDisplay.Length; i++){ //this will type it till it's done
             panelText.text += stringToDisplay[i];
@@ -626,7 +632,7 @@ public class CharDialogue : MonoBehaviour
             charSpawner.animator.SetBool("AnimatorIsTalking", true);
         }
         
-        if(Input.GetMouseButtonDown(0)){ //if the player clicks
+        if(Input.GetMouseButtonDown(0) && canSkip){ //if the player clicks
             if(isTypingLetterByLetter){ //if the dialogue is still typing
                 // Debug.Log("Showing full line...");
                 audioManager.PlaySFX(audioManager.GeneralClick);
@@ -643,6 +649,7 @@ public class CharDialogue : MonoBehaviour
                 charSpawner.animator.SetBool("AnimatorIsTalking", false);
                 player.characterHasToRespond = false;
                 playerGameObject.SetActive(true);
+                WaitCoroutine(3);
             }
         }
     }

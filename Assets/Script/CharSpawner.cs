@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 
@@ -123,6 +120,7 @@ public class CharSpawner : MonoBehaviour
         player.isXara = true;
         player.isLucas = false;
         player.switchCharacterButton.SetActive(false);
+        player.hasAskedQuestion = false;
         
        // Debug.Log("Player's current interviewee set");
 

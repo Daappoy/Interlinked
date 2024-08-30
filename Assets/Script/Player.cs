@@ -22,9 +22,11 @@ public class Player : MonoBehaviour
         public GameObject questionsPanel;
         public GameObject[] buttons;
         public TextMeshProUGUI[] buttonTexts;
+        private int[] normalAIQuestionsIndexes = {0, 1, 3, 5};
+        private int[] normalHumanQuestionsIndexes = {0, 2, 4, 5};
         private int[] aiButtonIndexes = { 0, 1, 3, 5, 7, 9 };
         private int[] humanButtonIndexes = { 0, 2, 4, 5, 6, 8 };
-        private bool hasAskedQuestion;
+        public bool hasAskedQuestion;
         public bool[] canAskQuestion; //0-9
 
     //Subtitles
@@ -104,6 +106,18 @@ public class Player : MonoBehaviour
         "What's your favorite thing to do at the park?", //Timmy
         "What’s your favorite pastime with your family?", //Kate
     };
+    
+    public void disableBaseQuestion(){
+        if((Types) currentChar.type == Types.Human){
+            for(int i = 0; i < normalHumanQuestionsIndexes.Length; i++){
+                buttons[normalHumanQuestionsIndexes[i]].SetActive(false);
+            }
+        } else if((Types) currentChar.type == Types.AI){
+            for(int i = 0; i < normalAIQuestionsIndexes.Length; i++){
+                buttons[normalAIQuestionsIndexes[i]].SetActive(false);
+            }
+        }
+    }
     
     public void disableAllQuestionButtons(){
         questionsPanel.SetActive(false);
@@ -377,6 +391,7 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator TypeLetterByLetter(string stringToDisplay){
+        StartCoroutine(WaitCoroutine(0.5f));
         // Debug.Log("In the coroutine of typing letter by letter, string to display is:");
         panelText.text = "";
         Debug.Log(stringToDisplay);
@@ -389,9 +404,13 @@ public class Player : MonoBehaviour
     }
     
     public void SwitchActivePlayableCharacter(){
-        audioManager.PlaySFX(audioManager.SwitchChara);
-        stringToDisplay = "";
+        StopCoroutine(typingCoroutine);
+        StopCoroutine(charDialogueScript.typingCoroutine);
         panelText.text = "";
+        charDialogueScript.panelText.text = "";
+        charDialogueScript.stringToDisplay = "";
+        stringToDisplay = "";
+        audioManager.PlaySFX(audioManager.SwitchChara);
 
         switchCharacterButton.SetActive(false);
         if(isTypingLetterByLetter){
@@ -417,16 +436,18 @@ public class Player : MonoBehaviour
             isXara = true;
             hasAskedQuestion = false;
             StopCoroutine(typingCoroutine);
-            playerCanAct = false;
             panelText.text = "";
             stringToDisplay = "Let's see...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-            StartCoroutine(WaitCoroutine());
+            StartCoroutine(WaitCoroutine(3));
 
             DisableLucasRelatedObjects();
             EnableXaraRelatedObjects();
             enablePlayerQuestions();
 
+            if(currentChar.stanceWasRevealed == true){
+                disableBaseQuestion();
+            }
             
             if((Types) currentChar.type == Types.AI && currentChar.stanceWasRevealed == false){
                 bool canNoLongerAskAnyQuestions = true;
@@ -442,6 +463,7 @@ public class Player : MonoBehaviour
                     typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
                     disableAllQuestionButtons();
                 }
+
             } else if((Types) currentChar.type == Types.Human && currentChar.stanceWasRevealed == false){
                 bool canNoLongerAskAnyQuestions = true;
                 for(int i = 0; i < humanButtonIndexes.Length-2; i++){
@@ -459,20 +481,21 @@ public class Player : MonoBehaviour
             }
 
             if(!isTalking && characterHasToRespond == false && currentChar.stanceWasRevealed == true && (Stance) currentChar.stance == Stance.Neutral){
+                Debug.Log("Running line 464's condition");
                 StopCoroutine(typingCoroutine);
                 panelText.text = "";
                 typingCoroutine = StartCoroutine(TypeLetterByLetter("Time to decide"));
                 disableAllQuestionButtons();
             } 
+
         } else if(isXara){
             isLucas = true;
             isXara = false;
             StopCoroutine(typingCoroutine);
-            playerCanAct = false;
             panelText.text = "";
             stringToDisplay = "Let me analyze that...";
             typingCoroutine = StartCoroutine(TypeLetterByLetter(stringToDisplay));
-            StartCoroutine(WaitCoroutine());
+            StartCoroutine(WaitCoroutine(3));
 
             DisableXaraRelatedObjects();
             EnableLucasRelatedObjects();
@@ -509,17 +532,21 @@ public class Player : MonoBehaviour
                     audioManager.PlaySFX(audioManager.GeneralClick);
                     // Debug.Log("Mouse Clicked");
                     if(isTypingLetterByLetter == true){ 
+                        Debug.Log("Going into update's if statement under if is typing letter by letter = true");
                         StopCoroutine(typingCoroutine);
                         isTypingLetterByLetter = false; 
-                        Debug.Log("Showing full line...");
+                        // Debug.Log("Showing full line...");
                         panel.SetActive(true);
-                        Debug.Log("String to display is: " + stringToDisplay);
+                        // Debug.Log("String to display is: " + stringToDisplay);
                         panelText.text = stringToDisplay;
-                        isTalking = false; 
+                        isTalking = false;
+                        WaitCoroutine(3);
                     } else if(!isTalking && characterHasToRespond == true){
+                        Debug.Log("Going into update's else if statement under isnt talking and character has to respond");
                         // Debug.Log("Waiting for character to respond...");
                         characterResponds();
                     } else if(!isTalking && characterHasToRespond == false && hasAskedQuestion == true && currentChar.stanceWasRevealed == false){
+                        Debug.Log("Going into update's else if statement under isnt talking, doesnt have to reply, has asked question but stance wasnt revealed");
                         // Debug.Log("Character has responded");
                         if(!ranOnce && typingCoroutine != null){
                             StopCoroutine(typingCoroutine);
@@ -539,7 +566,7 @@ public class Player : MonoBehaviour
                 }
             } else{
                 if(Input.GetMouseButtonDown(0)){
-                    Debug.Log("Be patient, wait and don't spam");
+                    // Debug.Log("Be patient, wait and don't spam");
                 }
             }
         }
@@ -618,8 +645,9 @@ public class Player : MonoBehaviour
         charSpawner.animator.SetBool("AnimatorIsMoving", true);
     }
 
-    private IEnumerator WaitCoroutine(){
-        yield return new WaitForSeconds(3);
+    private IEnumerator WaitCoroutine(float time){
+        playerCanAct = false;
+        yield return new WaitForSeconds(time);
         Debug.Log("Waited for 3 seconds");
         playerCanAct = true;
     }

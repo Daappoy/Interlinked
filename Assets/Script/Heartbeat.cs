@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,8 +9,10 @@ public class Heartbeat : MonoBehaviour
         AI,
         Human,
     }
-
+    
     public Player player;
+    public TMP_Text panelText;
+    public string stringToDisplay;
     public TextMeshProUGUI upperMonitorText;
     public TextMeshProUGUI lowerMonitorText;
     public AudioManager audioManager;
@@ -37,6 +37,8 @@ public class Heartbeat : MonoBehaviour
     // public bool onEnableDone = false;
 
     public void OnEnable(){
+        panelText = player.panelText;
+        
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         points = 0;
         newDot = null;
@@ -111,7 +113,6 @@ public class Heartbeat : MonoBehaviour
 
             if(pity >= guarantee){
                 // Debug.Log("The AI / Human wasn't lying / was lying");
-                
                 if(characterSpawner.isSentient){
                     confirmation = 1;
                     NotSentient.SetActive(false);
@@ -121,9 +122,10 @@ public class Heartbeat : MonoBehaviour
                     } else if( (Types) currentCharacter.type == Types.Human ){
                         LieDetected.SetActive(true);
                     }
-                    player.panelText.text = "";
-                    player.stringToDisplay = "We've got a hit Xara, that was a lie";
-                    player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                    panelText.text = "";
+                    stringToDisplay = "We've got a hit Xara, that was a lie";
+                    player.currentChar.stanceWasRevealed = true;
+                    player.typingCoroutine = player.StartCoroutine(player.TypeLetterByLetter(stringToDisplay));
                     player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                     player.switchCharacterButton.SetActive(true);
                 } else {
@@ -135,27 +137,27 @@ public class Heartbeat : MonoBehaviour
                     } else if( (Types) currentCharacter.type == Types.Human ){
                         VitalsNormal.SetActive(true);
                     }
-                    player.panelText.text = "";
-                    player.stringToDisplay = "I'm certain, this one's not hiding anything Xara";
-                    currentCharacter.stanceWasRevealed = true;
-                    player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                    panelText.text = "";
+                    stringToDisplay = "I'm certain, this one's not hiding anything Xara";
+                    player.currentChar.stanceWasRevealed = true;
+                    player.typingCoroutine = player.StartCoroutine(player.TypeLetterByLetter(stringToDisplay));
                     player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                     player.switchCharacterButton.SetActive(true);
                 }
             } else {
-                Debug.Log("Pity not yet at guarantee");
+                Debug.Log("Pity not yet at guarantee, it's at " + pity);
                 Unsure.SetActive(true);
-                player.panelText.text = "";
-                player.stringToDisplay = "We're going to need more data, Xara";
-                player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+                panelText.text = "";
+                stringToDisplay = "We're going to need more data, Xara";
+                player.typingCoroutine = player.StartCoroutine(player.TypeLetterByLetter(stringToDisplay));
                 player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
                 player.switchCharacterButton.SetActive(true);
             }
         } else{
             Debug.Log("Failed minigame, give Inaccurate Results");
             Unsure.SetActive(true);
-            player.stringToDisplay = "Error... Unable to infer based on heartbeat data";
-            player.StartCoroutine(player.TypeLetterByLetter(player.stringToDisplay));
+            stringToDisplay = "Error... Unable to infer based on heartbeat data";
+            player.typingCoroutine = player.StartCoroutine(player.TypeLetterByLetter(stringToDisplay));
             player.switchCharacterButton.GetComponent<Image>().sprite = player.xaraSprite;
             player.switchCharacterButton.SetActive(true);
         }
