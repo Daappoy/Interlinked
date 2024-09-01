@@ -7,6 +7,10 @@ public class Scene : MonoBehaviour
     public void PlayGame(){
         SceneManager.LoadScene(1);
     }
+    public void Tutorial()
+    {
+        SceneManager.LoadScene(3);
+    }
 
     public void BackToMenu()
     {
