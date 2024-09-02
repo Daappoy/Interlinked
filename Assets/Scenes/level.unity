@@ -1184,7 +1184,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 375d1174e5b91624dbd0b58ad69f1637, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.24
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3203,7 +3203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1055612522}
   SFXSource: {fileID: 269207104}
-  background: {fileID: 0}
+  background: {fileID: 8300000, guid: f268decbc7ebf9548aed87906e8fcc91, type: 3}
   Pause: {fileID: 8300000, guid: 52c4065ae49cae04fb50ea14b47ab5b7, type: 3}
   ClickOnPause: {fileID: 8300000, guid: 73b65fdf6b2c7a94ea104c228ad506dc, type: 3}
   GeneralClick: {fileID: 8300000, guid: a3122cce5e3535147b8bc51968733c63, type: 3}
@@ -3214,6 +3214,8 @@ MonoBehaviour:
   SwitchChara: {fileID: 8300000, guid: 9f8fd1e0b5a325944be8cd0eb8abc8c5, type: 3}
   Thump: {fileID: 8300000, guid: 9ce302c2a67b1b94797edf78f2aa6080, type: 3}
   Walking: {fileID: 8300000, guid: 6b93549c951ed304db7211918c195450, type: 3}
+  lampBuzzing: {fileID: 8300000, guid: c482237642129e6459d132f89511a27a, type: 3}
+  clockTicks: {fileID: 8300000, guid: fc62955abbef0b54bb4e5b82161900dd, type: 3}
 --- !u!4 &953377470
 Transform:
   m_ObjectHideFlags: 0
@@ -3258,9 +3260,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 375d1174e5b91624dbd0b58ad69f1637, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f268decbc7ebf9548aed87906e8fcc91, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
   Mute: 0

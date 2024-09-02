@@ -122,6 +122,7 @@ public class ScoreManager : MonoBehaviour
         } else{
             Debug.Log("Decision already made - Reform");
         }
+        audioManager.PlaySFX(audioManager.Walking);
     }
 
     public void LetGo(){
@@ -158,6 +159,7 @@ public class ScoreManager : MonoBehaviour
         } else{
             Debug.Log("Decision already made - Let Go");
         }
+        audioManager.PlaySFX(audioManager.Walking);
     }
 
 

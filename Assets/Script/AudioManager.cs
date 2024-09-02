@@ -24,6 +24,9 @@ public class AudioManager : MonoBehaviour
   public AudioClip Thump;
   public AudioClip Walking;
 
+  public AudioClip lampBuzzing;
+  public AudioClip clockTicks;
+
   private void Start()
   {
     musicSource.clip = background;
