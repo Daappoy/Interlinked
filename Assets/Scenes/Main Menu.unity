@@ -593,8 +593,8 @@ Canvas:
   m_GameObject: {fileID: 422818276}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -671,6 +671,8 @@ MonoBehaviour:
   SwitchChara: {fileID: 8300000, guid: 9f8fd1e0b5a325944be8cd0eb8abc8c5, type: 3}
   Thump: {fileID: 8300000, guid: 9ce302c2a67b1b94797edf78f2aa6080, type: 3}
   Walking: {fileID: 0}
+  lampBuzzing: {fileID: 0}
+  clockTicks: {fileID: 0}
 --- !u!4 &445040958
 Transform:
   m_ObjectHideFlags: 0
