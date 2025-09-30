@@ -1,16 +1,16 @@
 <table>
   <tr>
     <td align="left" width="50%">
-      <img width="100%" alt="gif1" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/Decision-gif.mp4">
+      <img width="100%" alt="gif1" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/GIFS/Decision-gif.gif">
     </td>
     <td align="right" width="50%">
-      <img width="100%" alt="gif2" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/Dialogue-gif.mp4">
+      <img width="100%" alt="gif2" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/GIFS/Dialogue.gif">
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <img width="100%" alt="gif3" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/scan-gif.mp4">
+  <img width="100%" alt="gif3" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/GIFS/scan.gif">
 </p>
 
 ##  📜Scripts and Features
