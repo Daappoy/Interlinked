@@ -8,8 +8,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
   [Header("Audio Source")]
-  [SerializeField] AudioSource musicSource;
-  [SerializeField] AudioSource SFXSource;
+  public AudioSource musicSource;
+  public AudioSource SFXSource;
 
   [Header("Audio Clip")]
   public AudioClip background;
@@ -29,8 +29,8 @@ public class AudioManager : MonoBehaviour
 
   private void Start()
   {
-    musicSource.clip = background;
-    musicSource.Play();
+    // musicSource.clip = background;
+    // musicSource.Play();
   }
 
   public void PlaySFX(AudioClip clip)
