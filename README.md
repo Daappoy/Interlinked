@@ -13,6 +13,9 @@
   <img width="100%" alt="gif3" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/GIFS/scan.gif">
 </p>
 
+## Work time
+Programmer: 14 days, 2-3 hours per day average
+
 ##  📜Scripts and Features
 
 You are tasked to check every person or AI is friendly to one another or not, and this is some of the scripts that are in the game
