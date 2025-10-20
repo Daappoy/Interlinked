@@ -38,14 +38,14 @@ Interlinked is a game placed in a near future where the AI and humans have to li
 finished game
 <br>
 
-## Work time
-Programmer: 14 days, 2-3 hours per day average
-
 ## 👤Developer & Contributions
 - Muhammad Daffa Alghifari (Game Programmer)
 - Oscar Bagus Putra Penn klopper (game artist)
 - Nicholas Dwi Putra (Game Designer and Game Programmer)
 <br>
+
+## Work time
+Programmer: 14 days, 2-3 hours per day average
 
 ## 📂Files description
 
