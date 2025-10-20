@@ -13,8 +13,6 @@
   <img width="100%" alt="gif3" src="https://github.com/Daappoy/Interlinked/blob/main/Assets/Videos/GIFS/scan.gif">
 </p>
 
-## Work time
-Programmer: 14 days, 2-3 hours per day average
 
 ##  📜Scripts and Features
 
@@ -39,6 +37,9 @@ Interlinked is a game placed in a near future where the AI and humans have to li
 ## 🕹️Play Game
 finished game
 <br>
+
+## Work time
+Programmer: 14 days, 2-3 hours per day average
 
 ## 👤Developer & Contributions
 - Muhammad Daffa Alghifari (Game Programmer)
